@@ -1,0 +1,54 @@
+---
+title: "Semana 2"
+format: pdf
+editor: visual
+---
+
+## Operações Básicas
+
+```{python}
+print("Olá, Mundo")
+
+## adição
+2 + 3
+
+## subtração
+5 - 3
+
+## Multiplicação
+5 * 6
+
+## Divisão
+12 / 6
+
+## Valor Absoluto
+abs(-5)
+
+## Potenciação
+2 ** 5
+```
+
+## Importando a Biblioteca Math para operações mais compplexas
+
+```{python}
+import math
+
+## Raiz quadrada
+math.sqrt(9)
+
+## Exponencial
+math.exp(8)
+
+## Logaritmo base 10
+math.log10(10)
+
+## Logaritmo Natural
+math.log(2)
+```
+
+## Seguir anotaões 
+
+```{python}
+
+```
+
