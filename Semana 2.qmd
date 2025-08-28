@@ -4,7 +4,7 @@ format: pdf
 editor: visual
 ---
 
-## Operações Básicas
+## Operações Matemáticas Básicas
 
 ```{python}
 print("Olá, Mundo")
@@ -28,7 +28,7 @@ abs(-5)
 2 ** 5
 ```
 
-## Importando a Biblioteca Math para operações mais compplexas
+### Importando a Biblioteca Math para operações mais compplexas
 
 ```{python}
 import math
@@ -44,11 +44,60 @@ math.log10(10)
 
 ## Logaritmo Natural
 math.log(2)
+
+## Fatorial
+math.factorial(5)
+
+## Funções Trigonométricas
+math.sin(6)
+
 ```
 
-## Seguir anotaões 
+## Tipos de Variáveis
+
+Tipos básicos de variáveis: - int --\> Inteiro - float --\> números decimais - str --\> conjunto de caracteres
+
+Exemplo:
+
+```{python}
+x = 10 # int
+y = 3.14 # float
+nome = "Eberechi"
+
+print(type(x))
+print(type(y))
+print(type(nome))
+
+```
+
+Em Python, o nome de uma variável deve sempre começar com uma letra. Após a primeira letra, podem ser utilizados números e o caractere sublinhado (\_). O sublinhado também é permitido como primeiro caractere, embora seu uso inicial seja maiscomum para indicar variáveis internas ou especiais.
+
+## Strings
+
+Em Python, strings são sequências de caracteres, como palavras, frases ou textos completos. Podem ser definidas usando aspas simples ('...') ou aspas duplas ("..."). Para exibir o conteúdo de uma string na tela, utiliza-se a função print().
+
+```{python}
+mensagem = "Vamos, Furacão"
+print(mensagem)
+
+```
+
+Para juntar (concatenar) duas ou mais strings em Python, utiliza-se o operador +. É importante que todos os elementos sejam strings; caso contrário, será necessário converter ovalor com str().
+
+```{python}
+nome = "Eberechi"
+sobrenome = "Eze"
+nome_completo_s_espaço = nome + sobrenome
+nome_completo = nome + " " + sobrenome
+print(nome_completo_s_espaço)
+print(nome_completo)
+
+```
+
+### Manipulação de Strings
 
 ```{python}
 
 ```
+
 
