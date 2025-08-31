@@ -55,7 +55,11 @@ math.sin(6)
 
 ## Tipos de Variáveis
 
-Tipos básicos de variáveis: - int --\> Inteiro - float --\> números decimais - str --\> conjunto de caracteres
+Tipos básicos de variáveis:
+
+-   int --> Inteiro
+-   float --> números decimais
+-   str --> conjunto de caracteres
 
 Exemplo:
 
@@ -97,6 +101,37 @@ print(nome_completo)
 ### Manipulação de Strings
 
 ```{python}
+teste = "O Bruno Zapelli foi o cara da partida"
+len(teste) # retorna o tamanho do string
+teste.capitalize() # retorna a string com a primeira letra maiúscula
+teste.count("a") # informa quantas vezes o caractere aparece na string
+teste.startswith("O") # verifica se a string inicia com determinada sequência
+teste.endswith("b") #verifica se a string termina com determinada sequência
+teste.isalnum() # verifica se a string consiste apenas em caracteres alfanuméricos
+teste.isalpha() # verifica se a string consiste apenas em letras
+teste.islower() # verifica se a string consiste apenas em caracteres minúsculos
+teste.isupper() # verifica se a string consiste apenas em caracteres maiúsculos
+teste.lower() # retorna a string com todos os caracteres em minúsculo
+teste.upper() # retorna a string com todos os caracteres em maiúsculo
+teste.swapcase() #inverte maiúsculas e minúsculas
+teste.title() #deixa todas as primeiras letras em maiúsculo
+teste.split() #transforma a string em uma lista, dividindo todas as suas partes
+teste.replace("cara","homem") # substitui S1 por S2 na string
+teste.find("r") # retorna o índice da primeira ocorrência de um caractere (ou -1 se não encontrado)
+teste2 = "Zapelli"
+teste2.ljust(25) # retorna a string para um tamanho mínimo, alinhando à esquerda
+teste2.rjust(25) # retorna a string para um tamanho mínimo, alinhando à direita
+teste2.center(25) # retorna a string para um tamanho mínimo, centralizando
+teste2.lstrip() # remove os espaços à esquerda da string
+teste2.rstrip() # remove os espaços à direita da string
+teste2.strip() # remove os espaços em branco dos dois lados da string
+
+```
+
+### Operações com Strings
+
+```{python}
+
 
 ```
 
