@@ -130,9 +130,85 @@ teste2.strip() # remove os espaços em branco dos dois lados da string
 
 ### Operações com Strings
 
-```{python}
+As variáveis do tipo **string** suportam diferentes tipos de operações, entre elas:
 
+- Fatiamento: Permite obter apenas uma parte de uma string, também chamada de fatia.
+- Concatenação: Junta duas ou mais strings para formar uma nova string maior.
+- Composição: Muito usada em mensagens exibidas na tela. Consiste em usar strings como modelos, onde é possível inserir outras strings ou valores.
+
+#### Fatiamento de Strings
+
+O fatiamento (*slicing*) é um recurso usado para obter apenas uma parte dos caracteres de uma
+string. A sintaxe básica é:
+
+- O limite_inferior indica a posição inicial (incluída).
+- O limite_superior indica a posição final (não incluída).
+- A contagem de posições começa em 0.
+
+Por exemplo, "ABC"[0:2] retorna "AB", pois pega da posição 0 até antes da posição 2.
+Essa regra é chamada de intervalo fechado no início e aberto no fim.
+
+#####**Exemplos de fatiamento**:
+
+```{python}
+s = "Python"
+s[1:4] # pega os caracteres nas posições 1, 2 e 3
+s[2:] # pega os índices de 2 até o final
+s[:4] # pega do início até a posição 3
 
 ```
 
+####Concatenação de Strings
+
+A **concatenação** é a operação de unir duas ou mais strings em uma única sequência de caracteres.
+
+- Usamos o operador + para juntar strings.
+- Podemos também repetir uma string usando o operador *.
+- Útil para criar mensagens e compor textos dinamicamente.
+
+#####**Exemplos de concatenação**:
+
+```{python}
+s = "ABC"
+s + "C"
+s + "D" * 4
+"X" + "-" * 10 + "X"
+s + "x4 = " + s*4
+
+```
+
+####Composição de Strings
+
+A **composição** é usada para inserir valores em uma string de forma controlada,
+utilizando **marcadores de posição** (% + tipo).
+
+Principais marcadores:
+
+- %d → números inteiros
+- %s → strings
+- %f → números decimais
+
+Também é possível controlar:
+
+- Tamanho mínimo (%3d)
+- Zeros à esquerda (%03d)
+- Casas decimais (%5.2f)
+
+Útil para exibir mensagens formatadas, relatórios e valores monetários.
+
+#####**Exemplos de composição**:
+
+```{python}
+idade = 22
+print("[%d]" % idade)
+print("[%03d]" % idade)
+print("[%3d]" % idade) 
+print("%5.2f" % 5) 
+
+idade = 22
+nome = "Eberechi Eze"
+grana = 51.34
+print("%s tem %d anos e R$%5.2f no bolso" % (nome, idade, grana))
+
+```
 
