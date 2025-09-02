@@ -1,0 +1,213 @@
+---
+title: "Semana 3 - Aula 02/09"
+format: html
+editor: visual
+---
+
+# Estruturas de Decisão
+
+Usar > `reticulate::repl_python()` antes de mais nada no R
+ctrl + shift + C --> transforma código em comentário
+
+# Semana 3
+
+## Estruturas de Decisão
+
+### IF
+
+```{python}
+nota = 8
+if nota >= 6:
+  print("Aluno aprovado")
+  
+
+```
+
+### IF ... ELSE
+
+```{python}
+nota1 = 5
+nota2 = 8
+nota3 = 3
+nota_final = (nota1 + nota2 + nota3) / 3
+if nota_final >=6.5:
+  print("Aluno aprovado!")
+else: 
+  print("Aluno reprovado")
+
+nota = 0
+if nota >= 6.5:
+  print("Aprovado!")
+if nota == 0:
+  print("Vergonha!")
+else:
+  print("Reprovado!")
+```
+
+#### IF ... ELSE com Float input
+
+```{python}
+nota = float(input("Digite a nota: "))
+4
+if nota >= 6.5:
+  print("Aprovado!")
+else:
+  print("Reprovado!")
+```
+
+### IF ... ELIF ... ELSE
+
+```{python}
+nota = 5
+if nota >= 6:
+  print("Aprovado")
+elif nota >= 4:
+  print("Prova final")
+else:
+  print("Reprovado")
+```
+
+#### Mais um exemplo
+
+```{python}
+n = 13
+if n > 0:
+  print("O número é positivo")
+elif n == 0:
+  print("O número é zero")
+else:
+  print("O número é negativo")
+  
+n1 = -13
+if n1 > 0:
+  print("O número é positivo")
+elif n1 == 0:
+  print("O número é zero")
+else:
+  print("O número é negativo")
+
+```
+
+### IF Aninhados
+
+```{python}
+idade = 18
+if idade >= 18:
+  if idade < 21:
+    print("Precisa se alistar")
+  else:
+    print("Já se alistou")
+```
+
+### Múltiplas condições
+
+```{python}
+idade = int(input("Digite idade: "))
+27
+if idade < 12:
+  print("Criança")
+elif idade < 18:
+  print("Adolescente")
+elif idade < 60:
+  print("Adulto")
+else:
+  print("Idoso")
+  
+pontos = int(input("Quantidade de pontos do time: "))
+45
+if pontos > 80:
+  print("Campeão")
+elif 60 < pontos < 80:
+  print("Libertadores")
+elif 50 < pontos < 60:
+  print("Sul-americana")
+elif 44 < pontos < 50:
+  print("Zona do agrião")
+else:
+  print("Rebaixado")
+  
+```
+
+# Estruturas de Repetição
+
+## While e For
+
+- while: não se sabe quantas vezes a estrutura vai ser repetida;
+- for: sabe-se exatamente a quantidade de repetições que se quer.
+
+### Exemplos
+
+```{python}
+
+contador = 0
+while contador < 5:
+  print("Coontador:", contador)
+  contador = contador + 0.5
+  
+acumulador = 0
+while acumulador < 7:
+  print("Acumulador:", acumulador)
+  acumulador += 1.33
+  
+x = 0
+while x < 5:
+  print(f"O valor de x é {x}")
+  x += 0.67
+
+```
+
+### Para estruturas de string
+
+```{python}
+senha = "54321"
+leitura = ""
+while leitura != senha:
+  leitura = input("Digite a senha: ")
+  if leitura == senha:
+    print("Acesso liberado")
+  else:
+    print("Senha incorreta. Tente novamente")
+```
+
+### Soma com while
+
+```{python}
+
+contador = 0
+somador = 0
+while contador < 5:
+  contador += 1
+  valor = float(input(f"Digite o {contador} valor: "))
+  somador += valor
+print("Soma = ", somador)
+
+
+```
+
+## Estrutura for
+
+Exemplo:
+
+```{python}
+
+for i in range(5):
+  print("O valor de i: ", i)
+  
+for i in range(10):
+  print(f"O valor de i é {i}")
+
+frutas = ["maçã", "banana", "uva"]
+for fruta in frutas:
+  print("Eu gosto de", fruta)
+
+```
+
+#### Mais exemplo com range
+
+```{python}
+s = 0
+for x in range(1, 20, 3):
+  s = s + x
+print("Soma =", s)
+```
+
