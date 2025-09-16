@@ -71,12 +71,14 @@ x = a.pop(2) # remove pelo índice 2
 
 ### Onde o array se destaca (e onde não)
 
-- **Vantagens**:
-  - Memória: 
-  
-- **Limitações**:
-  - 
-  
+-   **Vantagens**:
+
+    -   Memória:
+
+-   
+
+    ## **Limitações**:
+
 ```{python}
 import array
 meu_array = array.array('i', [10, 20, 30])
@@ -93,15 +95,13 @@ Numpy significa "Numerical Python", iniciado em 2006 e é usado para computaçã
 
 ### Arrays n-dimensionais
 
-Vetores, matrizes e matrizes 3D. 
+Vetores, matrizes e matrizes 3D.
 
 Instalando o **Numpy**
-
 
 ```{python}
 reticulate::py_install("numpy")
 ```
-
 
 ```{python}
 import numpy as np
@@ -132,4 +132,3 @@ print(r.y)
 
 
 ```
-
