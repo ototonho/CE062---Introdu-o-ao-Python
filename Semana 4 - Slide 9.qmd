@@ -43,24 +43,19 @@ O DataFrame é a estrutura de dados mais importante do Pandas. Uma instância do
 
 Um DataFrame é construído sobre os Arrays do NumPy, mas adiciona funcionalidades para a análise de dados reais.
 
-#### Característica: Array (NumPy) vs. DataFrame (Pandas) 
+#### Característica: Array (NumPy) vs. DataFrame (Pandas)
 
-Tipos de Dados: Homogêneo: todos os elementos do mesmo tipo.  vs   Heterogêneo: colunas podem ter tipos diferentes (números, texto, etc.). 
-Rótulos (Índices): Acesso por índices numéricos (ex:array[0, 1]). vs. Rótulos explícitos para linhas (index) e colunas (columns). 
-Dados faltantes: Suporte básico com np.nan. vs. Funções robustas e integradas para tratar dados faltantes (ex: fillna(), dropna()).
-Uso Principal: Computação numérica e álgebra linear. O "motor".  vs. Manipulação, limpeza e análise de dados tabulares. O "veículo". 
-Flexibilidade: Tamanho fixo após a criação.    vs. Tamanho pode ser alterado (novas colunas/linhas podem ser adicionadas). 
-
+Tipos de Dados: Homogêneo: todos os elementos do mesmo tipo. vs Heterogêneo: colunas podem ter tipos diferentes (números, texto, etc.). Rótulos (Índices): Acesso por índices numéricos (ex:array\[0, 1\]). vs. Rótulos explícitos para linhas (index) e colunas (columns). Dados faltantes: Suporte básico com np.nan. vs. Funções robustas e integradas para tratar dados faltantes (ex: fillna(), dropna()). Uso Principal: Computação numérica e álgebra linear. O "motor". vs. Manipulação, limpeza e análise de dados tabulares. O "veículo". Flexibilidade: Tamanho fixo após a criação. vs. Tamanho pode ser alterado (novas colunas/linhas podem ser adicionadas).
 
 ### Data Frame
 
 A classe DataFrame da biblioteca pandas possui um método construtor com alguns parâmetros:
 
-- data: recebe os dados em formato de lista dicionário ou até um DataFrame.
-- index: recebe uma string que definem os rótulos das linhas.
-- columns: recebe uma string que definem os rótulos das colunas.
-- dtype: recebe um tipo de dados com intuito de forçar a conversão do tipo de dados do
-- DataFrame. Por default, esse parâmetro é None e os tipos são inferidos automaticamente.
+-   data: recebe os dados em formato de lista dicionário ou até um DataFrame.
+-   index: recebe uma string que definem os rótulos das linhas.
+-   columns: recebe uma string que definem os rótulos das colunas.
+-   dtype: recebe um tipo de dados com intuito de forçar a conversão do tipo de dados do
+-   DataFrame. Por default, esse parâmetro é None e os tipos são inferidos automaticamente.
 
 ### Criando um Data Frame a partir de uma lista de tuplas
 
@@ -124,18 +119,17 @@ df.index = ['A', 'B', 'C'] # Modificando os rótulos das linhas
 print(df)
 ```
 
-
 ### Atributos de um DataFrame
 
 Objetos do tipo DataFrame possuem diversos atributos que são bastante úteis:
 
-- index: retorna os rótulos das linhas em fotmato de lista
-- columns: retorna os rótulos das colunas em formato de lista
-- ndim: retorna o número de dimensões do DataFrame
-- shape: retorna uma tupla com o número de linhas e colunas do DataFrame
-- size: retorna o número total de elementos do DataFrame
-- dtypes: retorna os tipos de dados de cada coluna do DataFrame
-- empty: retorna True se o DataFrame estiver vazio e False caso contrário
+-   index: retorna os rótulos das linhas em fotmato de lista
+-   columns: retorna os rótulos das colunas em formato de lista
+-   ndim: retorna o número de dimensões do DataFrame
+-   shape: retorna uma tupla com o número de linhas e colunas do DataFrame
+-   size: retorna o número total de elementos do DataFrame
+-   dtypes: retorna os tipos de dados de cada coluna do DataFrame
+-   empty: retorna True se o DataFrame estiver vazio e False caso contrário
 
 *testar depois sozinho*
 
@@ -161,6 +155,7 @@ print(list(df.columns)) # Rótulos das colunas
 ```
 
 **3**
+
 ```{python}
 print(df.ndim) # Número de dimensões
 ```
@@ -205,11 +200,11 @@ Os DataFrames possuem indexadores para seleção de dados. Esses indexadores for
 
 Alguns dos indexadores mais comuns são:
 
-- `.T[]`: Transpõe o DataFrame (troca linhas por colunas).
-- `.loc[]`: Acessa dados por rótulos (índices). --> no geral, acaba sendo o mais utilizado
-- `.iloc[]`: Acessa dados por posições (índices numéricos).
-- `.at[]`: Acessa um único valor por rótulo.
-- `.iat[]`: Acessa um único valor por posição.
+-   `.T[]`: Transpõe o DataFrame (troca linhas por colunas).
+-   `.loc[]`: Acessa dados por rótulos (índices). --> no geral, acaba sendo o mais utilizado
+-   `.iloc[]`: Acessa dados por posições (índices numéricos).
+-   `.at[]`: Acessa um único valor por rótulo.
+-   `.iat[]`: Acessa um único valor por posição.
 
 O indexador `.T[]` retorna o DataFrame transposto, ou seja, troca as linhas pelas colunas.
 
@@ -251,7 +246,7 @@ print(df.at[2, 0])
 
 ```
 
-O indexador .iat[] é usado para acessar um único valor em um DataFrame, utilizando índices numéricos para especificar a linha e a coluna. Caso rótulos de um elemento sejam fornecidos, ao invés de seus índices um erro é gerado.
+O indexador `.iat[]` é usado para acessar um único valor em um DataFrame, utilizando índices numéricos para especificar a linha e a coluna. Caso rótulos de um elemento sejam fornecidos, ao invés de seus índices um erro é gerado.
 
 ```{python}
 print(df)
@@ -261,7 +256,7 @@ print(df.iat[2, 0])
 print(df.iat['C', 'Nome'])
 ```
 
-O indexador .loc[] é usado para acessar um grupo de linhas e colunas por rótulos ou uma matriz booleana.
+O indexador `.loc[]` é usado para acessar um grupo de linhas e colunas por rótulos ou uma matriz booleana.
 
 ```{python}
 print(df)
@@ -269,7 +264,7 @@ print(df)
 print(df.loc[['B','C']]) 
 ```
 
-O indexador .loc[] também pode ser usado para acessar linhas e colunas específicas ou ainda usar Booleanos.
+O indexador `.loc[]` também pode ser usado para acessar linhas e colunas específicas ou ainda usar Booleanos.
 
 ```{python}
 print(df.loc[['A','C'], ['Nome']]) # Acessa as linhas 'A' e 'C' e a coluna 'Nome'
@@ -287,7 +282,7 @@ print(df)
 print(df.loc[[1, 2]])
 ```
 
-O indexador .iloc[] é usado para acessar um grupo de linhas e colunas por índices inteiros (posições).
+O indexador `.iloc[]` é usado para acessar um grupo de linhas e colunas por índices inteiros (posições).
 
 ```{python}
 print(df)
@@ -295,7 +290,7 @@ print(df)
 print(df.iloc[[1, 2]]) # Acessa a linhas nas posições 1 e 2
 ```
 
-Mais exemplos 
+Mais exemplos
 
 ```{python}
 print(df.iloc[-1]) # Acessa a última linha do DataFrame
@@ -365,13 +360,13 @@ print(df3)
 
 #### Removendo linhas e Colunas de um DataFrame
 
-Para remover linhas ou colunas de um DataFrame, podemos usar o método drop(). Esse método retorna um novo DataFrame com as linhas ou colunas especificadas removidas. 
+Para remover linhas ou colunas de um DataFrame, podemos usar o método drop(). Esse método retorna um novo DataFrame com as linhas ou colunas especificadas removidas.
 
 Alguns dos parâmetros mais comuns do método drop() são:
 
-- index: rótulos das linhas a serem removidas.
-- columns: rótulos das colunas a serem removidas.
-- inplace: se True, modifica o DataFrame original; se False (default), retorna um novo DataFrame.
+-   index: rótulos das linhas a serem removidas.
+-   columns: rótulos das colunas a serem removidas.
+-   inplace: se True, modifica o DataFrame original; se False (default), retorna um novo DataFrame.
 
 **Removendo linhas:**
 
@@ -390,9 +385,9 @@ Pandas possui diversos operadores para realizar operações matemáticas e lógi
 
 Alguns dos operadores mais comuns são:
 
-- Aritméticos: +,+=, - -=, *,*=, etc.
-- Comparação: ==, !=, <, >, <=, >=
-- Lógicos: & (AND), | (OR), ~ (NOT)
+-   Aritméticos: `+,+=, - -=, *,*=, etc.`
+-   Comparação: `==, !=, <, >, <=, >=`
+-   Lógicos: `& (AND), | (OR), ~ (NOT)`
 
 Exemplo de uso do operador += para incrementar a idade de cada pessoa em 1 ano:
 
@@ -420,9 +415,9 @@ print(resultado)
 
 #### Seleção de Dados em um DataFrame
 
-A aplicação de operadores lógicos em colunas junto com o indexador .loc[] permite a seleção de dados em um DataFrame de forma ágil. Como vimos anteriormente, o resultado da aplicação de um operador lógico em uma coluna é uma lista de valores booleanos (True/False). Essa lista pode ser usada para selecionar linhas específicas de um DataFrame. O indexador .loc[] permite selecionar linhas com base em uma lista booleana.
+A aplicação de operadores lógicos em colunas junto com o indexador `.loc[]` permite a seleção de dados em um DataFrame de forma ágil. Como vimos anteriormente, o resultado da aplicação de um operador lógico em uma coluna é uma lista de valores booleanos (True/False). Essa lista pode ser usada para selecionar linhas específicas de um DataFrame. O indexador `.loc[]` permite selecionar linhas com base em uma lista booleana.
 
-Exemplo de como selecionar pessoas do sexo masculino (M) usando o operador == e o indexador.loc[]:
+Exemplo de como selecionar pessoas do sexo masculino (M) usando o operador == e o indexador`.loc[]`:
 
 ```{python}
 print(df1)
@@ -439,11 +434,11 @@ Para ordenar um DataFrame, podemos usar o método sort_values(). Esse método re
 
 Alguns dos parâmetros mais comuns do método sort_values() são:
 
-- axis: define o eixo para ordenação (0 para linhas, 1 para colunas). Default é 0.
-- ascending: se True (default), ordena em ordem crescente; se False, ordena em ordem
-- decrescente.
-- kind: define o tipo de ordenação (ex: 'quicksort', 'mergesort', etc.). Default é 'quicksort'.
-- inplace: se True, modifica o DataFrame original; se False (default), retorna um novo DataFrame.
+-   axis: define o eixo para ordenação (0 para linhas, 1 para colunas). Default é 0.
+-   ascending: se True (default), ordena em ordem crescente; se False, ordena em ordem
+-   decrescente.
+-   kind: define o tipo de ordenação (ex: 'quicksort', 'mergesort', etc.). Default é 'quicksort'.
+-   inplace: se True, modifica o DataFrame original; se False (default), retorna um novo DataFrame.
 
 Exemplo de como ordenar um DataFrame pela coluna 'Idade' em ordem crescente:
 
@@ -473,26 +468,68 @@ Pandas possui diversos métodos estatísticos para realizar operações estatís
 
 Alguns dos métodos estatísticos mais comuns são:
 
-- `mean()`: calcula a média dos valores.
-- `median()`: calcula a mediana dos valores.
-- `std()`: calcula o desvio padrão dos valores.
-- `var()`: calcula a variância dos valores.
-- `min()`: retorna o valor mínimo.
-- `max()`: retorna o valor máximo.
-- `sum()`: calcula a soma dos valores.
-- `count()`: conta o número de valores não nulos.
-- `describe()`: gera estatísticas descritivas resumidas.
+-   `mean()`: calcula a média dos valores.
+-   `median()`: calcula a mediana dos valores.
+-   `std()`: calcula o desvio padrão dos valores.
+-   `var()`: calcula a variância dos valores.
+-   `min()`: retorna o valor mínimo.
+-   `max()`: retorna o valor máximo.
+-   `sum()`: calcula a soma dos valores.
+-   `count()`: conta o número de valores não nulos.
+-   `describe()`: gera estatísticas descritivas resumidas.
 
 #### Outros Métodos
 
 Alguns outros métodos úteis para manipulação de DataFrames são:
 
-- `head(n)`: retorna as primeiras n linhas do DataFrame.
-- `tail(n)`: retorna as últimas n linhas do DataFrame.
-- `info()`: exibe um resumo conciso do DataFrame, incluindo o número de entradas, colunas, tipos de dados e uso de memória.
-- `value_counts()`: conta a frequência de valores únicos em uma coluna.
-- `isnull()`: retorna um DataFrame booleano indicando a presença de valores nulos.
-- `dropna()`: remove linhas ou colunas com valores nulos.
-- `fillna(value)`: preenche valores nulos com um valor especificado.
-- `apply(func)`: aplica uma função ao longo de um eixo do DataFrame (linhas ou colunas).
-- `groupby(by)`: agrupa o DataFrame por uma ou mais colunas e permite a aplicação de funções agregadas.
+-   `head(n)`: retorna as primeiras n linhas do DataFrame.
+-   `tail(n)`: retorna as últimas n linhas do DataFrame.
+-   `info()`: exibe um resumo conciso do DataFrame, incluindo o número de entradas, colunas, tipos de dados e uso de memória.
+-   `value_counts()`: conta a frequência de valores únicos em uma coluna.
+-   `isnull()`: retorna um DataFrame booleano indicando a presença de valores nulos.
+-   `dropna()`: remove linhas ou colunas com valores nulos.
+-   `fillna(value)`: preenche valores nulos com um valor especificado.
+-   `apply(func)`: aplica uma função ao longo de um eixo do DataFrame (linhas ou colunas).
+-   `groupby(by)`: agrupa o DataFrame por uma ou mais colunas e permite a aplicação de funções agregadas.
+
+
+**Exemplo**
+
+Vamos criar um DataFrame com dados fictícios de alunos e suas notas em diferentes disciplinas.
+
+```{python}
+import pandas as pd
+dados = {
+'Nome': ['Ana', 'Bruno', 'Carla', 'Daniel', 'Eva'],
+'Matemática': [85, 92, 78, 90, 88],
+'Física': [80, 95, 82, 88, 91],
+'Química': [78, 89, 85, 87, 90]
+}
+df = pd.DataFrame(dados)
+print(df)
+
+```
+
+Agora, vamos calcular a média das notas em cada disciplina usando o método mean() e desvio padrão usando o método std().
+
+```{python}
+medias = list(df[['Matemática','Física','Química']].mean())
+desviosp = list(df[['Matemática','Física','Química']].std())
+print(medias)
+
+```
+
+```{python}
+print(desviosp)
+
+```
+
+```{python}
+mean_std = pd.DataFrame([medias, desviosp], columns=['Matemática','Física','Química'], index=['
+print(mean_std)
+```
+
+
+### Operações com Matrizes
+
+
