@@ -1,0 +1,498 @@
+---
+title: "Semana 4 - Slide 9"
+format: html
+editor: visual
+---
+
+# Semana 4 - Slide 9
+
+## Pacote Pandas
+
+Pandas é um nome derivado de “Panel Data”, um termo de econometria para dados multidimensionais. Iniciado em 2008, por Wes McKinney, o Pandas é um pacote de código aberto de alto desempenho para manipulação e análise de dados em Python. O Pandas utiliza principalmente seus objetos DataFrame (estrutura de dados tabular bidimensional com rótulos) e Series (unidimensional com rótulos), e oferece um conjunto vasto de ferramentas para trabalhar com essas estruturas. Fornece recursos para limpeza de dados, filtragem, agrupamento (group by), junção (merge/join), tratamento de dados ausentes e análise de séries temporais.
+
+[Documentação do pandas](https://pandas.pydata.org/docs/)
+
+### Instalação do Pandas
+
+Instalar o Pandas é simples, basta usar o `pip: pip install pandas` Usando o *RStudio*: `py_require("pandas")` e `py_install("pandas")`, ou `reticulate::py_install("pandas")`
+
+Para usar o Pandas, primeiro precisamos importá-lo.
+
+```{python}
+import pandas
+```
+
+Para evitar a repetição do nome completo, é comum importar o Pandas com o alias pd:
+
+```{python}
+# Forma mais comum de importar a biblioteca com alias
+import pandas as pd
+```
+
+A seguir utilizaremos sempre o alias pd para acessar as funcionalidades do Pandas.
+
+## Data Frames
+
+O DataFrame é a estrutura de dados mais importante do Pandas. Uma instância do tipo DataFrame é um objeto de duas (ou mais ) dimensões com as seguintes características:
+
+-   Suas dimensões podem ser modificadas em decorrência da modificação dos dados.
+-   Possui rótulos para linhas e colunas, ao invés de exclusivamente por índices.
+-   Pode conter diferentes tipos de dados (numéricos, strings, booleanos, etc.) em diferentes colunas.
+
+### Data Frames (Pandas) vs Array (NumPy)
+
+Um DataFrame é construído sobre os Arrays do NumPy, mas adiciona funcionalidades para a análise de dados reais.
+
+#### Característica: Array (NumPy) vs. DataFrame (Pandas) 
+
+Tipos de Dados: Homogêneo: todos os elementos do mesmo tipo.  vs   Heterogêneo: colunas podem ter tipos diferentes (números, texto, etc.). 
+Rótulos (Índices): Acesso por índices numéricos (ex:array[0, 1]). vs. Rótulos explícitos para linhas (index) e colunas (columns). 
+Dados faltantes: Suporte básico com np.nan. vs. Funções robustas e integradas para tratar dados faltantes (ex: fillna(), dropna()).
+Uso Principal: Computação numérica e álgebra linear. O "motor".  vs. Manipulação, limpeza e análise de dados tabulares. O "veículo". 
+Flexibilidade: Tamanho fixo após a criação.    vs. Tamanho pode ser alterado (novas colunas/linhas podem ser adicionadas). 
+
+
+### Data Frame
+
+A classe DataFrame da biblioteca pandas possui um método construtor com alguns parâmetros:
+
+- data: recebe os dados em formato de lista dicionário ou até um DataFrame.
+- index: recebe uma string que definem os rótulos das linhas.
+- columns: recebe uma string que definem os rótulos das colunas.
+- dtype: recebe um tipo de dados com intuito de forçar a conversão do tipo de dados do
+- DataFrame. Por default, esse parâmetro é None e os tipos são inferidos automaticamente.
+
+### Criando um Data Frame a partir de uma lista de tuplas
+
+```{python}
+import pandas as pd
+nomes = ['Ana', 'Bruno', 'Carla']
+idades = [23, 35, 29]
+dados = list(zip(nomes, idades))
+print(dados)
+```
+
+```{python}
+df = pd.DataFrame(dados)
+print(df)
+df
+```
+
+*Note que o DataFrame cria automaticamente rótulos padrões (índices) para que os dados sejam acessados*
+
+### Criando um DataFrame a partir de um dicionário
+
+```{python}
+import pandas as pd
+dados = {'Nome': ['Ana', 'Bruno', 'Carla'],
+'Idade': [23, 35, 29]}
+df = pd.DataFrame(dados)
+print(df)
+```
+
+*Note que o DataFrame criado possui as colunas com nomes indicados nas chaves do dicionário.*
+
+### Criando um DataFrame com Rótulos Personalizados
+
+**DataFrame** permitem a criação de rótulos personalizados para as linhas e para as colunas de forma a facilitar o acesso aos dados.
+
+```{python}
+import pandas as pd
+dados = [('Ana', 23), ('Bruno', 35), ('Carla', 29)]
+colunas = ['Nome', 'Idade']
+linhas = ['A', 'B', 'C']
+df = pd.DataFrame(dados, columns=colunas, index=linhas)
+print(df)
+```
+
+### Modificando os Rótulos de uma DataFrame
+
+**Sem rótulos**
+
+```{python}
+import pandas as pd
+dados = [('Ana', 21), ('Bruno', 20), ('Carla', 22)]
+df = pd.DataFrame(data = dados)
+print(df)
+```
+
+**Com rótulos**
+
+```{python}
+df.columns = ['Nome', 'Idade'] # Modificando os rótulos das colunas
+df.index = ['A', 'B', 'C'] # Modificando os rótulos das linhas
+print(df)
+```
+
+
+### Atributos de um DataFrame
+
+Objetos do tipo DataFrame possuem diversos atributos que são bastante úteis:
+
+- index: retorna os rótulos das linhas em fotmato de lista
+- columns: retorna os rótulos das colunas em formato de lista
+- ndim: retorna o número de dimensões do DataFrame
+- shape: retorna uma tupla com o número de linhas e colunas do DataFrame
+- size: retorna o número total de elementos do DataFrame
+- dtypes: retorna os tipos de dados de cada coluna do DataFrame
+- empty: retorna True se o DataFrame estiver vazio e False caso contrário
+
+*testar depois sozinho*
+
+**Exemplos:**
+
+```{python}
+import pandas as pd
+print(df)
+```
+
+#### Vendo os rótulos
+
+**1**
+
+```{python}
+print(list(df.index)) # Rótulos das linhas
+```
+
+**2**
+
+```{python}
+print(list(df.columns)) # Rótulos das colunas
+```
+
+**3**
+```{python}
+print(df.ndim) # Número de dimensões
+```
+
+**4**
+
+```{python}
+print(df.shape) # Número de linhas e colunas
+```
+
+**5**
+
+```{python}
+print(df.size) # Número total de elementos
+```
+
+**6**
+
+```{python}
+print(df.empty) # Verifica se o DataFrame está vazio
+```
+
+### Acessando os Dados de um DataFrame
+
+Diferentemente dos arrays do NumPy, os dados de um DataFrame podem ser acessados tanto pelos rótulos (índices) quanto pelos índices numéricos. A forma de acessa um dado de um DataFrame é a seguinte:
+
+```{python}
+# dataframe[<coluna>][<linha>]
+```
+
+**Exemplo**
+
+```{python}
+dados = [('Ana', 21), ('Bruno', 20), ('Carla', 22)]
+df = pd.DataFrame(data = dados)
+print(df[0][0], df[0][1], df[0][2])
+```
+
+### Indexadores
+
+Os DataFrames possuem indexadores para seleção de dados. Esses indexadores fornecem formas fáceis e intuitivas de acessar os dados.
+
+Alguns dos indexadores mais comuns são:
+
+- `.T[]`: Transpõe o DataFrame (troca linhas por colunas).
+- `.loc[]`: Acessa dados por rótulos (índices). --> no geral, acaba sendo o mais utilizado
+- `.iloc[]`: Acessa dados por posições (índices numéricos).
+- `.at[]`: Acessa um único valor por rótulo.
+- `.iat[]`: Acessa um único valor por posição.
+
+O indexador `.T[]` retorna o DataFrame transposto, ou seja, troca as linhas pelas colunas.
+
+```{python}
+import pandas as pd
+dados = [('Ana', 21), ('Bruno', 20), ('Carla', 22)]
+df = pd.DataFrame(data = dados, columns=['Nome', 'Idade'], index=['A', 'B', 'C'])
+print(df)
+```
+
+```{python}
+print(df.T)
+```
+
+O indexador `.at[]` é usado para acessar um único valor em um DataFrame, utilizando rótulos (índices) para especificar a linha e a coluna.
+
+```{python}
+print(df)
+```
+
+```{python}
+df.at['C', 'Nome'] # Acessa o valor na linha 'C' e coluna 'Nome'
+```
+
+```{python}
+df.at['A', 'Idade'] # Acessa o valor na linha 'A' e coluna 'Idade'
+```
+
+O indexador `.at[]` opera apenas com rótulos e não com os índices dos elementos. Caso os índices de um elemento sejam fornecidos, ao invés dos seus rótulos um erro é gerado
+
+```{python}
+import pandas as pd
+# ...
+print(df)
+
+print(df.at['C', 'Nome'])
+
+print(df.at[2, 0])
+
+```
+
+O indexador .iat[] é usado para acessar um único valor em um DataFrame, utilizando índices numéricos para especificar a linha e a coluna. Caso rótulos de um elemento sejam fornecidos, ao invés de seus índices um erro é gerado.
+
+```{python}
+print(df)
+
+print(df.iat[2, 0])
+
+print(df.iat['C', 'Nome'])
+```
+
+O indexador .loc[] é usado para acessar um grupo de linhas e colunas por rótulos ou uma matriz booleana.
+
+```{python}
+print(df)
+
+print(df.loc[['B','C']]) 
+```
+
+O indexador .loc[] também pode ser usado para acessar linhas e colunas específicas ou ainda usar Booleanos.
+
+```{python}
+print(df.loc[['A','C'], ['Nome']]) # Acessa as linhas 'A' e 'C' e a coluna 'Nome'
+
+print(df.loc['B', ['Nome', 'Idade']]) # Acessa a linha 'B' e as colunas 'Nome' e 'Idade'
+
+print(df.loc[[True , False , True], 'Nome'])
+```
+
+O operador opera apenas com rótulos e não com os índices dos elementos. Caso os índices de um elemento sejam fornecidos, ao invés dos seus rótulos um erro é gerado.
+
+```{python}
+print(df)
+
+print(df.loc[[1, 2]])
+```
+
+O indexador .iloc[] é usado para acessar um grupo de linhas e colunas por índices inteiros (posições).
+
+```{python}
+print(df)
+
+print(df.iloc[[1, 2]]) # Acessa a linhas nas posições 1 e 2
+```
+
+Mais exemplos 
+
+```{python}
+print(df.iloc[-1]) # Acessa a última linha do DataFrame
+
+print(df.iloc[[0, 2], [0]]) # Acessa as linhas nas posições 0 e 2 e a coluna na posição 0
+```
+
+o indexador opera apenas com índices e não com os rótulos dos elementos. Caso os rótulos de um elemento sejam fornecidos, ao invés de seus índices um erro é gerado (chequem!).
+
+## Manipulando dados com pandas
+
+#### Adicionando e Modificando Colunas em um DataFrame
+
+Para adicionar uma nova coluna a um DataFrame, basta atribuir uma lista ou uma série de valores a um novo rótulo de coluna.
+
+```{python}
+print(df)
+```
+
+```{python}
+df['Cidade'] = 'São Paulo' # Adiciona uma nova coluna 'Cidade' com valor padrão
+print(df)
+```
+
+Para adicionar mais cidades
+
+```{python}
+df['Cidade'] = ['São Paulo', 'Rio de Janeiro', 'Belo Horizonte']
+print(df)
+```
+
+#### Adicionando e Modificando Linhas de um DataFrame
+
+Para adicionar novas linhas a um DataFrame, podemos usar o método pd.concat(). Esse método concatena dois ou mais DataFrames ao longo de um eixo (linhas ou colunas).
+
+#### Concatenando dois DataFrames por linhas (axis=0):
+
+```{python}
+dados1 = [('Ana', 21,'F'), ('Bruno', 20,'M')]
+df1 = pd.DataFrame(data = dados1, columns=['Nome', 'Idade','Sexo'])
+print(df1)
+```
+
+```{python}
+dados = [ {'Nome': 'Carla', 'Idade': 22, 'Sexo': 'F'}, {'Nome': 'Daniel', 'Idade': 18, 'Sexo':
+df2 = pd.DataFrame(data = dados)
+df3 = pd.concat([df1, df2], ignore_index=True)
+print(df3)
+```
+
+#### Concatenando dois DataFrames por colunas (axis=1):
+
+Concatenando dois DataFrames por colunas (axis=1):
+
+```{python}
+dados1 = [('Ana', 21), ('Bruno', 20)]
+df1 = pd.DataFrame(data = dados1, columns=['Nome', 'Idade'])
+print(df1)
+```
+
+```{python}
+dados2 = [('F'), ('M')]
+df2 = pd.DataFrame(data = dados2, columns=['Sexo'])
+df3 = pd.concat([df1, df2], axis=1)
+print(df3)
+```
+
+#### Removendo linhas e Colunas de um DataFrame
+
+Para remover linhas ou colunas de um DataFrame, podemos usar o método drop(). Esse método retorna um novo DataFrame com as linhas ou colunas especificadas removidas. 
+
+Alguns dos parâmetros mais comuns do método drop() são:
+
+- index: rótulos das linhas a serem removidas.
+- columns: rótulos das colunas a serem removidas.
+- inplace: se True, modifica o DataFrame original; se False (default), retorna um novo DataFrame.
+
+**Removendo linhas:**
+
+```{python}
+print(df)
+```
+
+```{python}
+df.drop(index=['B'], inplace=True) # Remove a linha com rótulo 'B' no DataFrame original
+print(df)
+```
+
+#### Operadores
+
+Pandas possui diversos operadores para realizar operações matemáticas e lógicas nas colunas dos DataFrames.
+
+Alguns dos operadores mais comuns são:
+
+- Aritméticos: +,+=, - -=, *,*=, etc.
+- Comparação: ==, !=, <, >, <=, >=
+- Lógicos: & (AND), | (OR), ~ (NOT)
+
+Exemplo de uso do operador += para incrementar a idade de cada pessoa em 1 ano:
+
+```{python}
+dados1 = [('Ana', 21,'F'), ('Bruno', 20,'M'), ('Carla', 22,'F'), ('Daniel', 18,'M')]
+df1 = pd.DataFrame(data = dados1, columns=['Nome', 'Idade','Sexo'])
+print(df1)
+```
+
+```{python}
+df1['Idade'] += 1
+print(df1)
+```
+
+Exemplo de como verificar as pessoas do sexo masculino (M)
+
+```{python}
+print(df1)
+```
+
+```{python}
+resultado = list(df1['Sexo'] == 'M')
+print(resultado)
+```
+
+#### Seleção de Dados em um DataFrame
+
+A aplicação de operadores lógicos em colunas junto com o indexador .loc[] permite a seleção de dados em um DataFrame de forma ágil. Como vimos anteriormente, o resultado da aplicação de um operador lógico em uma coluna é uma lista de valores booleanos (True/False). Essa lista pode ser usada para selecionar linhas específicas de um DataFrame. O indexador .loc[] permite selecionar linhas com base em uma lista booleana.
+
+Exemplo de como selecionar pessoas do sexo masculino (M) usando o operador == e o indexador.loc[]:
+
+```{python}
+print(df1)
+```
+
+```{python}
+df_masculino = df1.loc[df1['Sexo'] == 'M']
+print(df_masculino)
+```
+
+#### Ordenando um DataFrame
+
+Para ordenar um DataFrame, podemos usar o método sort_values(). Esse método retorna um novo DataFrame ordenado com base nos valores de uma ou mais colunas.
+
+Alguns dos parâmetros mais comuns do método sort_values() são:
+
+- axis: define o eixo para ordenação (0 para linhas, 1 para colunas). Default é 0.
+- ascending: se True (default), ordena em ordem crescente; se False, ordena em ordem
+- decrescente.
+- kind: define o tipo de ordenação (ex: 'quicksort', 'mergesort', etc.). Default é 'quicksort'.
+- inplace: se True, modifica o DataFrame original; se False (default), retorna um novo DataFrame.
+
+Exemplo de como ordenar um DataFrame pela coluna 'Idade' em ordem crescente:
+
+```{python}
+print(df1)
+```
+
+```{python}
+df_ordenado = df1.sort_values(by='Idade')
+print(df_ordenado)
+```
+
+Exemplo de como ordenar um DataFrame pelos rótulos das linhas de forma decrescente:
+
+```{python}
+print(df1)
+```
+
+```{python}
+df_ordenado = df1.sort_index(ascending=False)
+print(df_ordenado)
+```
+
+### Métodos Estatísticos
+
+Pandas possui diversos métodos estatísticos para realizar operações estatísticas nas colunas dos DataFrames.
+
+Alguns dos métodos estatísticos mais comuns são:
+
+- `mean()`: calcula a média dos valores.
+- `median()`: calcula a mediana dos valores.
+- `std()`: calcula o desvio padrão dos valores.
+- `var()`: calcula a variância dos valores.
+- `min()`: retorna o valor mínimo.
+- `max()`: retorna o valor máximo.
+- `sum()`: calcula a soma dos valores.
+- `count()`: conta o número de valores não nulos.
+- `describe()`: gera estatísticas descritivas resumidas.
+
+#### Outros Métodos
+
+Alguns outros métodos úteis para manipulação de DataFrames são:
+
+- `head(n)`: retorna as primeiras n linhas do DataFrame.
+- `tail(n)`: retorna as últimas n linhas do DataFrame.
+- `info()`: exibe um resumo conciso do DataFrame, incluindo o número de entradas, colunas, tipos de dados e uso de memória.
+- `value_counts()`: conta a frequência de valores únicos em uma coluna.
+- `isnull()`: retorna um DataFrame booleano indicando a presença de valores nulos.
+- `dropna()`: remove linhas ou colunas com valores nulos.
+- `fillna(value)`: preenche valores nulos com um valor especificado.
+- `apply(func)`: aplica uma função ao longo de um eixo do DataFrame (linhas ou colunas).
+- `groupby(by)`: agrupa o DataFrame por uma ou mais colunas e permite a aplicação de funções agregadas.
