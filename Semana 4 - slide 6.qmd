@@ -125,3 +125,175 @@ print(lista_com_indice)
 
 Neste exemplo, a função enumerate() é aplicada à lista lista, resultando em uma nova lista lista_com_indice que contém tuplas com o índice e o valor correspondente de cada elemento da lista original.
 
+A função enumerate() é especialmente útil quando precisamos iterar sobre uma lista e também precisamos do índice de cada elemento, facilitando a manipulação e análise dos dados.
+Exemplo:
+
+```{python}
+notas = [6.5, 7.0, 8.2, 5.9, 9.1, 6.8]
+# Aplica bônus de 1 pontos nas notas de posições ímpares
+for i, nota in enumerate(notas):
+if i % 2 != 0: # Verifica se o índice é ímpar
+notas[i] = min(nota + 1, 10.0) # Adiciona 1 ponto à nota, mas não ultrapassa 10.0
+print(notas)
+
+```
+
+Neste exemplo, utilizamos a função enumerate() para iterar sobre a lista notas, obtendo tanto o índice (i) quanto o valor da nota (nota). Em seguida, verificamos se o índice é ímpar e, se for, adicionamos 1 ponto à nota correspondente, garantindo que a nota não ultrapasse 10.0 usando a função min().
+
+### Manipulação de Arquivos: Conceitos Fundamentais
+
+Um arquivo é uma área em disco para armazenar dados de forma permanente, gerenciada pelo sistema operacional. Permite a entrada e saída de dados em programas.
+
+O Ciclo de Vida de um Arquivo: O trabalho com arquivos sempre segue três etapas:
+
+1. Abertura: Conecta o programa ao arquivo no disco.
+2. Leitura e/ou Escrita: As operações desejadas são realizadas.
+3. Fechamento: Libera os recursos do computador e garante que os dados foram gravados.
+
+Função open(nome, modo): É usada para abrir um arquivo em Python
+
+- nome: O nome do arquivo (ex: "dados.txt")
+- modo: Uma string que define a operação. Principais modos:
+  - 'r': Leitura (read).
+  - 'w': Escrita (write). Apaga o conteúdo anterior se o arquivo já existir.
+  - 'a': Escrita (append). Adiciona novos dados ao final do arquivo, preservando o conteúdo existente.
+  
+Exemplo: Escrita e Leitura
+
+Escrevendo em um arquivo (modo='w')
+O método .write() grava uma string no arquivo. É preciso adicionar `\n` para criar novas linhas.
+
+```{python}
+# Abre o arquivo para escrita. Se não existir, será criado.
+arquivo_escrita = open("numeros.txt", "w")
+for linha in range(1, 6): # Escreve os números de 1 a 5
+arquivo_escrita.write(f"{linha}\n")
+arquivo_escrita.close() # Fecha o arquivo para salvar as alterações
+print("Arquivo 'numeros.txt' criado com sucesso.")
+
+```
+
+
+Lendo de um arquivo (modo='r')
+
+O método .readlines() lê todas as linhas do arquivo e retorna uma lista.
+
+```{python}
+# Abre o mesmo arquivo, agora para leitura
+arquivo_leitura = open("numeros.txt", "r")
+print("\nConteúdo do arquivo:")
+for linha in arquivo_leitura.readlines():
+print(linha.strip()) # .strip() remove quebras de linha invisíveis
+arquivo_leitura.close()
+
+```
+
+Adicicionando mais dados (modo='a')
+
+```{python}
+# Abre o arquivo para adicionar mais números
+arquivo_append = open("numeros.txt", "a")
+for linha in range(6, 11): # Adiciona os números de 6 a 10
+arquivo_append.write(f"{linha}\n")
+arquivo_append.close()
+
+```
+
+### Criando sua própria função
+
+Em muitas situações, pode ser que não exista uma função nativa ou em algum pacote para realizar o que desejamos. Nesses casos, podemos criar nossas próprias funções.
+
+Para fazer isso, utiliza-se a palavra-chave def, seguida do nome da função, parênteses (que podem conter parâmetros) e dois pontos.
+
+O corpo da função é indentado abaixo da definição.
+
+A função pode retornar um valor usando a palavra return.
+
+Exemplo:
+
+```{python}
+def numero_par(numero):
+return numero % 2 == 0 # Retorna True se o número for par, caso contrário False
+numeros = [1, 2, 3, 4, 5, 6]
+for i in numeros:
+if numero_par(i):
+print(f"{i} é par")
+else:
+print(f"{i} é ímpar")
+
+```
+
+Perceba que o resultado dessa função é simplesmente um booleano (True ou False), indicando se o número é par ou não.
+A função numero_par é então chamada dentro de um loop que itera sobre uma lista de números, imprimindo se cada número é par ou ímpar com base no resultado da função.
+
+Exemplo 2: Aqui definiremos uma função que recebe três parâmetros, sendo dois deles opcionais (com valores padrão). A função realiza uma operação matemática simples e retorna o resultado.
+
+```{python}
+def funcao_exemplo(a, b=2, c=3):
+return a + b * c
+resultado1 = funcao_exemplo(4)
+resultado2 = funcao_exemplo(4, 5)
+resultado3 = funcao_exemplo(4, 5, 6)
+print(resultado1)
+
+print(resultado2)
+
+print(resultado3)
+
+```
+
+Exemplo 3: Aqui vamos definir uma função que recebe uma lista com dados e retorna o valor máximo, mínimo e a média dos valores na lista.
+
+```{python}
+def estatisticas(lista):
+maximo = max(lista)
+minimo = min(lista)
+media = sum(lista) / len(lista)
+return maximo, minimo, media
+dados = [10, 20, 30, 40, 50]
+# Chamando a função e armazenando os resultados nos objetos
+maximo_dados, minimo_dados, media_dados = estatisticas(dados)
+print(f"Máximo: {maximo_dados}, Mínimo: {minimo_dados}, Média: {media_dados}")
+
+```
+
+### Expressões lambda
+
+Expressões lambda são uma forma concisa de criar funções anônimas (sem nome) em Python.
+
+Elas são úteis quando você precisa de uma função simples para uma tarefa específica e não deseja definir uma função completa usando def. Exemplo
+
+```{python}
+numeros = [1, 2, 3, 4, 5]
+dobrados = list(map(lambda x: x * 2, numeros))
+print(dobrados)
+```
+
+```{python}
+impares = list(filter(lambda x: x % 2 != 0, numeros))
+print(impares)
+```
+
+No exemplo acima, usamos expressões lambda para criar funções anônimas que são passadas para as funções map() e filter().
+
+### Método
+
+Método é uma função que está associada a um objeto e é chamada usando a notação de ponto (objeto.método()). Exemplo:
+
+```{python}
+x = 'Python'
+y = [1,-2,-3,-4,5]
+# Função:
+print(x)
+
+max(y)
+
+#Método:
+x.upper()
+
+y.append(99)
+print(y)
+```
+
+Métodos são amplamente utilizados em programação orientada a objetos para encapsular comportamentos específicos de um objeto.
+
