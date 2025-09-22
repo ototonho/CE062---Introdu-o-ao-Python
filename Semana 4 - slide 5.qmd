@@ -1,0 +1,430 @@
+---
+title: "Semana 4 - slide 5"
+format: html
+editor: visual
+---
+
+# Semana 4 - slide 5
+
+## Estruturas de Controle
+
+**Estruturas de Controle** é um termo amplo utilizado para englobar:
+
+- Estruturas de decisão → controlam o que será executado (ex.: if, if..else, if..elif..else)
+- Estruturas de repetição → controlam quantas vezes algo será executado (ex.: while, for)
+- Também chamadas de estruturas de controle de fluxo, pois determinam o caminho que o programa segue.
+- De uma forma geral, sem tais estruturas, um script seria apenas uma lista de instruções lineares, sem escolhas nem repetições.
+
+### Estruturas de Decisão
+
+Em muitos programas, precisamos tomar decisões.
+
+Exemplo do dia a dia:
+- Se a nota do aluno ≥ 6 → aprovado.
+- Senão → reprovado.
+Em Python, usamos estruturas de decisão para escolher qual bloco de código executar.
+
+Principais comandos:
+**if (se)**
+**if..else (se..senão)**
+**if..elif..else (se..senão..senão se)**
+
+#### Estrutura if
+
+O if executa um bloco de comandos apenas se a condição for verdadeira.
+
+Sintaxe:
+
+```{python}
+#if <condição>:
+#<bloco de comandos>
+```
+
+Se a condição for falsa, o bloco é ignorado.
+Esse é o caso mais simples de decisão.
+
+Exemplo simples com if
+
+```{python}
+nota = 8
+if nota >= 6:
+print("Aluno aprovado")
+
+```
+
+Como nota = 8, a condição nota >= 6 é verdadeira.
+Resultado: imprime "Aluno aprovado".
+Se a condição fosse falsa, nada seria executado.
+
+#### Estrutura if..else
+
+Muitas vezes precisamos prever duas situações:
+O que acontece se a condição for verdadeira.
+E o que acontece se for falsa.
+Sintaxe:
+
+```{python}
+#if <condição>:
+#<bloco se verdadeiro>
+#else:
+#<bloco se falso>
+
+```
+
+**Exemplo: aprovado ou reprovado**
+
+```{python}
+nota = float(input("Digite a nota: "))
+if nota >= 6:
+print("Aprovado")
+else:
+print("Reprovado")
+```
+
+Aqui o programa cobre os dois casos.
+Se a nota for 7 → imprime "Aprovado".
+Se a nota for 5 → imprime "Reprovado".
+
+#### Estrutura if..elif..else
+
+Usada quando existem várias condições diferentes.
+O Python avalia cada condição em ordem.
+O primeiro bloco verdadeiro é executado, e o restante é ignorado.
+Sintaxe:
+
+```{python}
+##if cond1:
+##...
+##elif cond2:
+##...
+##elif cond3:
+##...
+##else:
+##...
+```
+
+**Exemplo: conceito de aluno**
+
+```{python}
+nota = float(input("Digite a nota: "))
+if nota >= 6:
+print("Aprovado")
+elif nota >= 4:
+print("Exame")
+else:
+print("Reprovado")
+
+```
+
+Se nota ≥ 6 → "Aprovado".
+Se nota entre 4 e 6 → "Exame".
+Se nota < 4 → "Reprovado".
+
+**Exemplo: Duas formas de programar**
+
+```{python}
+n = 13
+if n > 0:
+print("O número é positivo.")
+elif n == 0:
+print("O número é zero.")
+else:
+print("O número é negativo.")
+
+```
+
+```{python}
+n = 13
+if n >= 0:
+if n == 0:
+print("O número é zero.")
+else:
+print("O número é positivo.")
+else:
+print("O número é negativo.")
+
+```
+
+*Na segunda evita-se que o intepretador vá pulando de elif em elif.*
+
+#### Decisões aninhadas
+
+Podemos colocar estruturas if dentro de outras.
+Isso é chamado de decisão aninhada (nested if).
+
+Exemplo:
+
+```{python}
+idade = 20
+if idade >= 18:
+if idade < 21:
+print("Menor de idade, mas ainda jovem adulto")
+else:
+print("Adulto")
+
+```
+
+Aqui temos dois níveis de decisão.
+
+#### Operadores relacionais
+
+As condições dependem de comparações.
+
+Operadores principais:
+- < → menor que
+- <= → menor ou igual
+- > → maior que
+- >= → maior ou igual
+- == → igual
+- != → diferente
+
+Exemplo:
+
+```{python}
+if x != 0:
+print("x não é zero")
+
+```
+
+#### Operadores Lógicos
+
+Permitem combinar condições.
+Principais operadores:
+and → E (todas as condições precisam ser verdadeiras).
+or → OU (pelo menos uma condição verdadeira).
+not → NÃO (inverte o valor lógico).
+
+Exemplo:
+
+```{python}
+if idade >= 18 and idade <= 65:
+print("Adulto em idade ativa")
+
+```
+
+**Exemplo: classificação de idade**
+
+```{python}
+idade = int(input("Digite a idade: "))
+if idade < 12:
+print("Criança")
+elif idade < 18:
+print("Adolescente")
+elif idade < 60:
+print("Adulto")
+else:
+print("Idoso")
+
+```
+
+Uso de múltiplas condições para classificar pessoas por faixa etária.
+
+##### Alguns Comentários
+
+- Indente corretamente o código (Python obriga indentação).
+- As palavras reservadas devem estar necessariamente alinhadas para o interpretador saber onde deve começar, e onde deve terminar uma condição.
+- Use condições claras e legíveis.
+- Evite condições muito complexas em uma única linha.
+- Prefira dividir em vários elif ou criar funções auxiliares.
+
+### Estruturas de Repetição
+
+- Em programação, muitas vezes precisamos repetir uma tarefa várias vezes.
+- Escrever o mesmo comando repetidamente não é prático.
+- As estruturas de repetição permitem executar um bloco de código diversas vezes.
+- São chamadas de laços (loops) porque "dão voltas" enquanto a condição for atendida.
+- Em Python, temos principalmente while e for.
+
+**Quando usar loops?**
+
+Usamos loops quando:
+- Não sabemos quantas vezes será necessário repetir (caso do while).
+- Sabemos exatamente quantas repetições queremos ou queremos percorrer uma lista (caso
+do for).
+
+Exemplos do dia a dia:
+- Solicitar senha até que esteja correta.
+- Percorrer uma lista de notas para calcular a média.
+- Mostrar a tabuada de um número.
+
+#### Estrutura while
+
+O while é um laço condicional.
+Enquanto a condição for True, o bloco interno será executado.
+Quando a condição se tornar False, o loop é encerrado.
+Sintaxe:
+
+```{python}
+#while <condição>:
+#<bloco de comandos>
+
+```
+
+Exemplo: contador com while
+
+```{python}
+contador = 0
+while contador < 5:
+print("Contador:", contador)
+contador = contador + 1
+
+```
+
+- O programa imprime os valores de 0 a 4.
+- A variável contador começa em 0 e aumenta de 1 a cada iteração.
+- Quando contador chega a 5, a condição contador < 5 se torna falsa, e o laço termina.
+
+Exemplo: senha
+
+```{python}
+senha = "54321"
+leitura = ""
+while leitura != senha:
+leitura = input("Digite a senha: ")
+if leitura == senha:
+print("Acesso liberado")
+else:
+print("Senha incorreta. Tente novamente")
+
+```
+
+Aqui, o loop se repete até que o usuário digite a senha correta.
+A cada tentativa, o programa compara o valor digitado com a senha armazenada.
+Esse tipo de situação é comum em sistemas de autenticação.
+
+Exemplo: placeholder
+
+```{python}
+x = 0
+while x < 5:
+print(f"O valor de x é {x}")
+x += 1
+
+```
+
+Exemplo: soma com while
+
+```{python}
+contador = 0
+somador = 0
+while contador < 5:
+contador += 1
+valor = float(input(f"Digite o {contador}º valor: "))
+somador += valor
+print("Soma =", somador)
+
+```
+
+Neste exemplo, pedimos 5 números ao usuário.
+A cada número digitado, ele é somado em somador.
+O contador garante que o laço rode apenas 5 vezes.
+
+#### Estrutura for
+
+O for é um laço usado para percorrer sequências (listas, strings, ranges).
+É muito usado porque simplifica a lógica.
+Sintaxe básica:
+
+```{python}
+#for <variavel> in <sequencia>:
+#<bloco de comandos>
+
+```
+
+A cada iteração, a variável assume o próximo valor da sequência.
+
+**Exemplo: for com range()**
+
+```{python}
+for i in range(5):
+print("Valor de i:", i)
+
+```
+
+O range(5) gera os números 0, 1, 2, 3, 4.
+Assim, o programa imprime 5 linhas.
+Diferente do while, não precisamos atualizar manualmente a variável i.
+
+**Exemplo: for com lista**
+
+```{python}
+frutas = ["maçã", "banana", "uva"]
+for fruta in frutas:
+print("Eu gosto de", fruta)
+
+```
+
+Aqui, o for percorre a lista de frutas.
+A cada iteração, a variável fruta recebe um elemento da lista.
+Esse padrão é muito útil para percorrer coleções de dados.
+
+**For com range(início, limite, passo)**
+
+```{python}
+S = 0
+for x in range(1, 20, 3):
+S = S + x
+print("Soma =", S)
+
+```
+
+O range(1, 20, 3) gera: 1, 4, 7, 10, 13, 16, 19.
+O laço soma todos esses valores.
+Isso evita ter que escrever todos os números manualmente.
+
+#### Operadores de Atribuição Composta (+=, -=, etc.)
+
+O operador += e similares são chamados de operadores de atribuição composta (augmented assignment operators). Em suma, modifica o objeto diretamente, opera e atribui.
+
+Outros operadores de atribuição composta:
+- -= (subtração e atribuição)
+- *= (multiplicação e atribuição)
+- /= (divisão e atribuição)
+- %= (módulo, esto da divisão entre dois números, e atribuição)
+- **= (exponenciação e atribuição)
+- //= (divisão inteira e atribuição)
+
+**Operadores de Atribuição Composta (+=, -=, etc.)**
+
+Exemplos:
+
+```{python}
+L1 = [1, 2]
+L1 += [3, 4]
+print(L1) # [1, 2, 3, 4]
+
+x = 5
+x += 2
+print(x) #7
+
+```
+
+Exemplo: média de notas
+
+```{python}
+notas = [3.4, 6.6, 8, 9, 10, 9.5, 8.8, 4.3]
+soma = 0
+for nota in notas:
+soma += nota
+media = soma / len(notas)
+print("Média =", media)
+
+```
+
+O loop percorre a lista e acumula as notas em soma.
+Ao final, divide pelo total de elementos (len(notas)).
+Resultado: a média do aluno.
+
+Exemplo:
+- Utilizando a função for, escreva um programa que calcule:
+S = 3 + 6 + 9 + ... + 333
+
+```{python}
+S = 0
+for x in range(3, 334, 3):
+S += x
+print("Soma =", S)
+
+```
+
+
