@@ -1,0 +1,302 @@
+---
+title: "Semana 4 - Slide 4"
+format: html
+editor: visual
+---
+
+# Semana 4 - Slide 4
+
+## Listas, Tuplas e Dicionários
+
+### Listas
+
+Uma Lista é um conjunto sequencial de valores em que cada valor é identificado através de um índice.
+Em Python, uma lista é declarada da seguinte forma:
+
+Nome_Lista = [ valor1, valor2, ..., valorN]
+*O primeiro valor tem índice 0.*
+
+**Exemplo**:
+
+```{python}
+LISTA1=[1,3,'texto',['a','b','c'],[10,20,30],90]
+print(LISTA1)
+
+LISTA1[0]
+
+LISTA1[3]
+
+LISTA1[3][2]
+
+LISTA1[5]
+
+
+```
+
+Para alterar os elementos de uma lista basta inserir o novo valor na posição do elemento.
+
+```{python}
+print(LISTA1)
+LISTA1[5]=[10,20,30]
+print(LISTA1)
+
+```
+
+#### Fatiamento (slicing)
+
+O fatiamento de listas é semelhante ao fatiamento de strings.
+A sintaxe geral para fatiamento é sequencia[inicio:fim:passo], onde:
+
+- **inicio**: O índice onde o fatiamento começa (inclusivo). Se omitido, começa do início da sequência.
+- **fim**: O índice onde o fatiamento termina (exclusivo). Se omitido, vai até o final da sequência.
+- **passo**: O incremento entre os índices. Se omitido, o padrão é 1 (avança de um em um).
+
+**Exemplo**:
+
+```{python}
+# Seleciona do elemento 2 (inclusivo) para frente
+LISTA1[2:]
+
+# Seleciona do elemento 2 (incluso) para frente, pulando 2
+LISTA1[2::2]
+
+# Seleciona até o elemento 3 (excluso)
+LISTA1[:3]
+
+# Seleciona do elemento 2 (incluso) até o elemento 4 (excluso)
+LISTA1[2:4]
+
+
+```
+
+#### Funções
+
+len: retorna o tamanho da lista.
+min: retorna o menor valor da lista.
+max: retorna o maior valor da lista.
+sum: retorna a soma dos elementos da lista.
+append: adiciona um novo valor no final da lista.
+extend: insere uma lista no final de outra lista.
+del: remove um elemento da lista, dado seu índice.
+in: verifica se um valor pertence à lista.
+sort(): ordena em ordem crescente.
+reverse(): inverte os elementos de uma lista.
+
+**Exemplos**:
+
+```{python}
+L = [10, 20, 30, 40]
+len(L)
+
+L = [10, 20, 30, 40]
+min(L)
+
+L = [10, 20, 30, 40]
+max(L)
+
+L = [10, 20, 30, 40]
+sum(L)
+
+L = [10, 20, 30, 40]
+L.append(50)
+L
+
+L = [10, 20, 30, 40]
+L.extend([50, 60])
+L
+
+L = [10, 20, 30, 40]
+del L[1]
+L
+
+L = [10, 20, 30, 40]
+30 in L
+
+L = [40, 10, 30, 20]
+L.sort()
+L
+
+L = [10, 20, 30, 40]
+L.reverse()
+L
+
+```
+
+#### Operações com Listas
+
+**Concatenação**
+
+```{python}
+A = [10,20,30]
+B = [40,50,60]
+C = A + B
+print(C)
+
+```
+
+**Repetição**
+
+```{python}
+L = [1,2]
+R = L * 4
+print(R)
+
+```
+
+**Criação de listas com range()**
+
+A função range() é muito utilizada em Python para gerar sequências de números inteiros. Ela não cria diretamente uma lista, mas sim um objeto range, que pode ser convertido em lista com list().
+A função range() pode receber 1, 2 ou 3 parâmetros:
+
+- **range(n)**
+  - Gera valores de 0 até n-1.
+  - Ou seja, o limite superior não é incluído.
+- **range(i, n)**
+  - Gera valores de i até n-1.
+  - Útil quando queremos começar de um número diferente de zero.
+- **range(i, n, p)**
+  - Gera valores de i até n-1, pulando de p em p.
+  - O parâmetro p define o passo (step).
+  
+**Exemplos**
+
+```{python}
+# apenas um parâmetro
+L1 = list(range(5))
+print(L1)
+
+# início e fim
+L2 = list(range(3, 8))
+print(L2)
+
+# início, fim e passo
+L3 = list(range(2, 11, 3))
+print(L3)
+
+```
+
+### Tuplas
+
+Uma tupla é semelhante a uma lista, mas **imutável**: seus elementos não podem ser alterados após a criação.
+
+**Exemplo**:
+
+```{python}
+T = (1, 2, 3, 4, 5)
+print(T)
+
+print(T[3])
+
+```
+
+Imutabilidade!!!
+
+```{python}
+T = (1, 2, 3, 4, 5)
+# T[3] = 8 --> retorna erro
+```
+
+#### Desempacotamento
+
+Podemos extrair valores de uma tupla diretamente em variáveis:
+
+```{python}
+T = (10, 20, 30, 40, 50)
+a, b, c, d, e = T
+
+print("a =", a, "b =", b)
+
+print("d+e =", d+e)
+
+```
+
+### Dicionários
+
+Um dicionário em Python é uma estrutura de dados que armazena informações no formato chave: valor.
+- Diferente das listas e tuplas (que usam índices numéricos), nos dicionários a busca é feita por chaves únicas.
+- Eles são muito usados quando precisamos associar informações de maneira direta, como em um cadastro.
+
+**Exemplo**:
+
+```{python}
+aluno = {"nome": "Ana", "idade": 20, "curso": "Estatística e Ciência de Dados"}
+print(aluno)
+
+```
+
+
+#### Criando e Acessando Dicionários
+
+Um dicionário pode ser criado com {} ou usando a função dict().
+
+```{python}
+# Forma 1
+carro = {"marca": "Fiat", "modelo": "Uno", "ano": 2015}
+
+# Forma 2
+carro = dict(marca="Fiat", modelo="Uno", ano=2015)
+
+```
+
+Para acessar, usamos a chave:
+
+```{python}
+print(carro["marca"])
+
+print(carro.get("ano"))
+
+```
+
+*A diferença é que get() não gera erro se a chave não existir, retornando None.* 
+
+#### Alterando e Manipulando Dicionários
+
+Podemos adicionar, alterar ou remover elementos facilmente.
+
+```{python}
+# Alterar valor
+carro["ano"] = 2021
+# Adicionar novo par chave:valor
+carro["cor"] = "prata"
+# Remover chave
+del carro["modelo"]
+print(carro)
+
+```
+
+Também podemos verificar se uma chave existe:
+
+```{python}
+print("marca" in carro) # True
+
+print("modelo" in carro) # False
+
+```
+
+```{python}
+aluno = {"nome": "Ana", "idade": 20, "curso": "Estatística e Ciência de Dados"}
+# Retorna todas as chaves
+print(aluno.keys())
+
+# Retorna todos os valores
+print(aluno.values())
+
+# Retorna pares (chave, valor)
+print(aluno.items())
+
+```
+
+
+- **len(dicionario)** → retorna quantos pares chave:valor existem.
+- **clear()** → apaga todo o conteúdo.
+- **pop(chave)** → remove e retorna o valor associado à chave.
+
+```{python}
+print(len(aluno))
+
+aluno.pop("idade")
+
+print(aluno)
+
+```
+
