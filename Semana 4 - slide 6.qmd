@@ -297,3 +297,23 @@ print(y)
 
 Métodos são amplamente utilizados em programação orientada a objetos para encapsular comportamentos específicos de um objeto.
 
+### Funções vs Métodos
+
+Funções são blocos de código independentes que realizam uma tarefa específica e podem ser chamadas diretamente pelo nome.
+
+Métodos são funções associadas a objetos e são chamados usando a notação de ponto (objeto.método()), podendo acessar os atributos do objeto.
+
+**funcao(objeto) (Função)**
+
+- É independente, não pertence a um objeto.
+- O objeto é passado como argumento: len(minha_lista)
+- Uma ferramenta geral que opera sobre dados.
+- Mais ligado à programação procedural.
+
+**objeto.metodo() (Método)**
+
+- Pertence a um objeto; é definido na classe do objeto.
+- É chamado a partir do objeto: minha_lista.append(10)
+- Um comportamento que o próprio objeto executa.
+- É a base da Programação Orientada a Objetos (POO).
+
