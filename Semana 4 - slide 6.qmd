@@ -1,0 +1,127 @@
+---
+title: "Semana 4 - slide 6"
+format: html
+editor: visual
+---
+
+# Semana 4 - slide 6
+
+## Funções em Python
+
+**O que são?**
+Funções são blocos de código que realizam uma tarefa específica.
+Elas permitem isolar a solução de um problema para ser reutilizada em outras partes do
+programa, sem precisar repetir as mesmas linhas.
+
+**Vantagens**
+Reutilização de código: Evita duplicação e facilita a manutenção.
+Organização: Torna o código mais legível e estruturado.
+Modularidade: Permite dividir o programa em partes menores e mais gerenciáveis.
+
+**Tipos de funções**
+
+Funções embutidas (built-in): Já vêm com o Python, como range(),round(),map(),filter(), zip(), enumerate(), etc.
+
+Funções definidas pelo usuário: Criadas pelo programador usando a palavra-chave def.
+A seguir apresentaremos algumas das funções built-in mencionadas acima.
+
+### Função round()
+
+A função round() arredonda números para o inteiro mais próximo ou para o número de casas
+decimais desejado.
+Sintaxe:
+
+```{python}
+#round(numero, ndigits)
+
+print(round(3.7))
+print(round(3.14159, 2))
+
+```
+
+### Função map()
+
+Em algumas situações, podemos estar interessados em aplicar uma determinada função em um objeto iterável (como uma lista ou tupla) e obter um novo objeto iterável com os resultados.
+A função map() é usada para aplicar uma função a cada item de um iterável (como uma lista ou tupla) e retornar um novo iterável com os resultados.
+
+Exemplo: 
+```{python}
+x = [1,-1,2,-2,3,-3]
+y = list(map(abs, x)) # Aplica a função abs() a cada elemento de x
+print(y)
+
+```
+
+No exemplo anterior, aplicamos a função abs() (valor absoluto) a cada elemento da lista x,
+resultando em uma nova lista y com os valores absolutos.
+Essa é a sintaxe esperada: map(função, objeto iterável). Com isso, podemos aplicar
+qualquer função que desejarmos a cada elemento do iterável.
+
+### Função filter
+
+Seguindo a mesma loógica de aplicar uma função a um objeto iterável, podemos estar
+interessados em filtrar os elementos de um iterável com base em uma condição específica.
+Exemplo:
+```{python}
+lista = ["1","2","3","João","Maria","Paula"]
+x = list(filter(str.isdigit, lista)) # Filtra apenas os elementos que são dígitos
+print(x)
+
+```
+
+
+```{python}
+y = list(map(int, x)) # Converte os elementos filtrados para inteiros
+print(y)
+
+```
+
+Neste exemplo, primeiramente utilizamos a função filter() com a função str.isdigit para filtrar apenas os elementos da lista que são dígitos. O resultado é uma nova lista x contendo apenas os elementos que passaram no filtro.
+
+Após isso, utilizamos, então, a função map() para converter os elementos filtrados para inteiros, resultando na lista y.
+
+
+### Função zip ()
+
+A função zip() é ligeiramente diferente das demais que vimos até agora, mas também retorna um iterável. Ela é usada para combinar elementos de múltiplos iteráveis (como listas ou tuplas)
+em pares ou tuplas.
+
+Exemplo:
+
+```{python}
+x = [1,2,3]
+y = [4,5,6]
+z = [7,8,9,10]
+result1 = list(zip(x,y))
+result2 = list(zip(x,z))
+result3 = list(zip(x,y,z))
+print(result1)
+
+print(result2)
+
+print(result3)
+
+```
+
+No primeiro resultado, foram combinados exatamente os pares de valores de x e y da seguinte forma: o primeiro elemento de x com o primeiro de y, o segundo de x com o segundo de y e assim por diante.
+
+Perceba, no entanto, o que acontece com objetos de tamanhos diferentes: a combinação ocorre até onde é possível. Quando não é mais possível combinar, os elementos restantes ficam de fora do resultado.
+
+A função zip() é especialmente útil quando precisamos agrupar dados relacionados de diferentes fontes ou listas, facilitando a manipulação e análise desses dados em conjunto.
+
+### Função enumerate ()
+
+Em algumas situações, podemos estar interessados em acessar o índice de um objeto iterável
+(como uma lista ou tupla) enquanto iteramos sobre seus elementos. A função enumerate() é
+usada para adicionar um contador automático a um iterável, retornando pares de índice e valor.
+Exemplo:
+
+```{python}
+lista = [ " Primeiro " , " Segundo " , " Terceiro " ]
+lista_com_indice = list(enumerate(lista))
+print(lista_com_indice)
+
+```
+
+Neste exemplo, a função enumerate() é aplicada à lista lista, resultando em uma nova lista lista_com_indice que contém tuplas com o índice e o valor correspondente de cada elemento da lista original.
+
