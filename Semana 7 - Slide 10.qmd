@@ -1,0 +1,45 @@
+---
+title: "Semana 7 - slide 10"
+format: html
+editor: visual
+---
+
+# Semana 7 - Slide 10
+
+```{python}
+
+```
+
+## Python e MySQL
+
+### SQL
+
+Linguagem declarativa, padronizada e baseada em tabelas
+
+Principais usos:
+- criar e modificar estruturas de tabelas
+- consultar dados
+- inserir dados
+- atualizar dados
+- excluir dados
+
+Outras funções:
+- fazer junções de tabelas
+- fazer uniões de tabelas
+- operações de agrupamento
+- operações de filtragem
+
+Sugestão de material complementar: `https://www.w3schools.com/sql/`
+
+### Tabelas
+
+Organiza os dados de forma lógica em colunas e linhas
+
+Exemplo Prático
+
+
+
+```{python}
+
+```
+
