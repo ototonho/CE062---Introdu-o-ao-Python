@@ -6,6 +6,8 @@ editor: visual
 
 # Semana 7 - Slide 10
 
+feito no 'https://sqliteonline.com/' com dados de 'https://docs.ufpr.br/~lmelo/sqlcursos.txt'
+
 ```{SQL}
 CREATE TABLE `cursos` (
 	`Ano` INT(4),
