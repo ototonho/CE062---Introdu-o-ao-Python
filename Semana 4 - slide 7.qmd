@@ -6,5 +6,34 @@ editor: visual
 
 # Semana 4 - slide 7
 
-Módulos, Pacotes e Bibliotecas em Python
+## Módulos, Pacotes e Bibliotecas em Python
+
+Em Python esses termos são frequentes, mas não são exatamente sinônimos.
+
+Módulo: É um arquivo único (.py) que contém funções e variáveis reutilizáveis. Exemplo: math, random.
+
+Pacote: É uma coleção de módulos organizados em pastas, com um arquivo `__init__.py`. Exemplo: numpy.linalg, pandas.io.
+
+Biblioteca: É um termo mais abrangente, usado para se referir a um conjunto de módulos e pacotes, geralmente pensado como uma solução completa para certo domínio. Exemplo: numpy, pandas e scikit-learn.
+
+PS: Tecnicamente, o math não é um pacote, mas sim um módulo embutido (built-in module) da biblioteca padrão do Python.
+
+### Comparação: Módulo, Pacote e Biblioteca
+
+- Módulo: Arquivo único `.py` com funções, classes e variáveis reutilizáveis; Ex: `math.py`; math, random, os
+- Pacote: Conjunto de módulos organizados em pastas, contém `__init__.py`; Ex: `numpy/linalg/`; Ex: numpy.linalg, pandas.io
+- Biblioteca: Conjunto mais amplo de pacotes e módulos com propósito específico; Ex: numpy/ (com vários
+pacotes e módulos dentro); Ex: numpy, pandas, scikit-learn, dask
+
+**Resumindo**:
+- Módulo = unidade básica de código.
+- Pacote = coleção organizada de módulos.
+- Biblioteca = conjunto de pacotes e módulos para resolver problemas complexos.
+
+## Arrays
+
+Os arrays são uma das estruturas mais importantes na programação científica. Eles permitem armazenar e manipular coleções de dados de forma eficiente. Um array pode ser entendido como uma tabela de elementos do mesmo tipo. Cada item ocupa uma posição ordenada, e o acesso a qualquer elemento é feito diretamente pelo índice. Isso garante velocidade e previsibilidade, duas características essenciais em cálculos numéricos de grande escala.
+
+É comum começar com listas em Python, pois elas são flexíveis e aceitam diferentes tipos de dados em uma mesma estrutura. Contudo, essa flexibilidade tem um preço: operações matemáticas não são naturais em listas e o consumo de memória é relativamente alto. Arrays, ao contrário, são projetados para lidar com coleções homogêneas e realizar cálculos de maneira muito mais eficiente. Embora eles tenham muitas semelhanças, Listas e Arrays são implementações diferentes em Python. Os arrays não são uma estrutura de dados nativa do Python. Por isso, para utilizá-los, é necessário importar um pacote (array ou NumPy).
+
 
