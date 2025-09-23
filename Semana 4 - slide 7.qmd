@@ -1,0 +1,10 @@
+---
+title: "Semana 4 - slide 7"
+format: html
+editor: visual
+---
+
+# Semana 4 - slide 7
+
+Módulos, Pacotes e Bibliotecas em Python
+
