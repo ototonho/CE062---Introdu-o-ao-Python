@@ -6,8 +6,55 @@ editor: visual
 
 # Semana 7 - Slide 10
 
-```{python}
+```{SQL}
+CREATE TABLE `cursos` (
+	`Ano` INT(4),
+	`Curso` VARCHAR(50),
+	`Turno` VARCHAR(3),
+	`DuraÃ§Ã£o` INT(1),
+	`Vagas` INT(4),
+	`Inscritos` INT(3),
+	`Ingressantes` INT(2),
+	`Matriculados` INT(3),
+	`Concluintes` INT(2)
+)
 
+INSERT INTO cursos (Ano,Curso,Turno,`DuraÃ§Ã£o`,Vagas,Inscritos,Ingressantes,Matriculados,Concluintes)
+VALUES
+(2017,'TÃ©cnico em PetrÃ³leo e GÃ¡s','M/T',3,30,359,30,107,22),
+(2017,'TÃ©cnico em Agente ComunitÃ¡rio de SaÃºde','M',2,30,62,29,83,10),
+(2016,'TÃ©cnico em PetrÃ³leo e GÃ¡s','M/T',3,30,474,30,131,16),
+(2016,'TÃ©cnico em Agente ComunitÃ¡rio de SaÃºde','M',2,30,53,30,44,15),
+(2015,'TÃ©cnico em PetrÃ³leo e GÃ¡s','M/T',3,30,649,38,132,19),
+(2015,'TÃ©cnico em Agente ComunitÃ¡rio de SaÃºde','M',2,30,49,27,61,18),
+(2014,'TÃ©cnico em PetrÃ³leo e GÃ¡s','M/T',3,30,511,26,108,11),
+(2014,'TÃ©cnico em Agente ComunitÃ¡rio de SaÃºde','M',2,30,42,27,44,10),
+(2013,'TÃ©cnico em PetrÃ³leo e GÃ¡s','M/T',3,30,465,27,90,10),
+(2013,'TÃ©cnico em Agente ComunitÃ¡rio de SaÃºde','M',2,30,28,10,29,9),
+(2018,'TÃ©cnico em PetrÃ³leo e GÃ¡s','M/T',3,30,359,30,104,0),
+(2018,'TÃ©cnico em Agente ComunitÃ¡rio de SaÃºde','M/T',2,30,62,28,111,18),
+(2019,'TÃ©cnico em Agente ComunitÃ¡rio de SaÃºde','M',3,30,59,31,118,1),
+(2019,'TÃ©cnico em PetrÃ³leo e GÃ¡s','M',2,30,412,28,105,19),
+(2020,'TÃ©cnico em Agente ComunitÃ¡rio de SaÃºde','M',3,30,220,29,129,13),
+(2020,'TÃ©cnico em PetrÃ³leo e GÃ¡s','M',2,30,311,30,122,18),
+(2021,'TÃ©cnico em Agente ComunitÃ¡rio de SaÃºde','M',3,30,55,19,134,2),
+(2021,'TÃ©cnico em PetrÃ³leo e GÃ¡s','I',2,30,214,30,128,25),
+(2022,'TÃ©cnico em Agente ComunitÃ¡rio de SaÃºde','M',3,30,0,0,131,11),
+(2022,'TÃ©cnico em PetrÃ³leo e GÃ¡s','I',2,30,240,29,126,20),
+(2023,'TÃ©cnico em Agente ComunitÃ¡rio de SaÃºde','M',3,30,0,0,10,1),
+(2023,'TÃ©cnico em PetrÃ³leo e GÃ¡s','I',2,30,282,35,113,16),
+(2024,'TÃ©cnico em PetrÃ³leo e GÃ¡s','I',2,30,322,37,125,18)
+
+
+SELECT * FROM cursos # mostra a tabela 
+
+SELECT AVG(matriculados) FROM cursos WHERE ano BETWEEN 2017 and 2020
+
+SELECT
+AVG(matriculados) AS 'Média Mat',
+AVG(inscritos) AS 'Média Insc'
+FROM cursos WHERE ano IN (2017, 2019, 2021)
+GROUP BY curso
 ```
 
 ## Python e MySQL
@@ -16,18 +63,9 @@ editor: visual
 
 Linguagem declarativa, padronizada e baseada em tabelas
 
-Principais usos:
-- criar e modificar estruturas de tabelas
-- consultar dados
-- inserir dados
-- atualizar dados
-- excluir dados
+Principais usos: - criar e modificar estruturas de tabelas - consultar dados - inserir dados - atualizar dados - excluir dados
 
-Outras funções:
-- fazer junções de tabelas
-- fazer uniões de tabelas
-- operações de agrupamento
-- operações de filtragem
+Outras funções: - fazer junções de tabelas - fazer uniões de tabelas - operações de agrupamento - operações de filtragem
 
 Sugestão de material complementar: `https://www.w3schools.com/sql/`
 
@@ -37,9 +75,6 @@ Organiza os dados de forma lógica em colunas e linhas
 
 Exemplo Prático
 
-
-
 ```{python}
 
 ```
-
