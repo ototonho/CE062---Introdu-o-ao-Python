@@ -317,3 +317,151 @@ Métodos são funções associadas a objetos e são chamados usando a notação 
 - Um comportamento que o próprio objeto executa.
 - É a base da Programação Orientada a Objetos (POO).
 
+De forma geral, as funções são fundamentais na programação, pois promovem a reutilização de código, melhoram a organização e facilitam a manutenção dos programas.
+Ao criar suas próprias funções, você pode encapsular lógica específica, tornando seu código mais eficiente e fácil de entender.
+
+## Pactoes em Python
+
+### Trabalhando com pacotes
+
+Pacotes são coleções de módulos que fornecem funcionalidades adicionais para o Python. Eles são usados para organizar e reutilizar código, facilitando o desenvolvimento de aplicações complexas.
+
+A importação de pacotes é feita usando a palavra-chave import, seguida do nome do pacote ou módulo que você deseja usar.
+
+Podem ser importadas funções, classes ou variáveis específicas de um módulo usando a sintaxe from módulo import item.
+Há também a possibilidade de importar um módulo com um apelido usando a palavra-chave as, o que pode ser útil para evitar conflitos de nomes ou para simplificar o código.
+
+#### Pacotes nativos (Standard Library)
+
+Conjunto de módulos que já vêm junto com a instalação do Python. Fazem parte do núcleo da linguagem e são essenciais para tarefas comuns.
+
+Criados e mantidos pelos desenvolvedores do Python.
+
+Garantem funções básicas para programação sem depender de pacotes externos.
+
+Portabilidade: qualquer instalação de Python terá esses módulos.
+
+Essenciais: cobrem áreas comuns como:
+- Matemática (math, statistics, random);
+- Sistema operacional (os, sys, pathlib);
+- Data e hora (datetime, time);
+- Arquivos e compressão (csv, json, zipfile);
+- Internet e rede (http, urllib);
+
+Pacote math e Arredondamento em Python
+
+Oferece funções matemáticas avançadas: trigonometria, logaritmos, exponenciais, arredondamento etc.
+
+Arredondamento com **math**
+
+- math.floor(x): arredonda para baixo (menor inteiro).
+- math.ceil(x): arredonda para cima (maior inteiro).
+- math.trunc(x): remove a parte decimal (truncamento).
+
+```{python}
+import math
+print(math.floor(3.7))
+print(math.ceil(3.2))
+print(math.trunc(-3.9))
+
+```
+
+Pacote **statistics**
+
+Fornece funções estatísticas para análise de dados numéricos e é ideal para cálculos rápidos sem precisar de bibliotecas externas.
+
+Principais Funções
+
+- statistics.mean(lista) → média aritmética.
+- statistics.median(lista) → mediana.
+- statistics.mode(lista) → moda (valor mais frequente).
+- statistics.stdev(lista) → desvio padrão amostral.
+- statistics.variance(lista) → variância amostral.
+
+Exemplo: 
+
+```{python}
+import statistics as st
+dados = [2, 4, 4, 4, 5, 7, 9]
+st.mean(dados)
+
+```
+
+Exemplo:
+
+```{python}
+st.median(dados)
+
+st.mode(dados)
+
+st.stdev(dados)
+
+```
+
+Pacote **random**
+
+Uma biblioteca que fornece funções para gerar números aleatórios e realizar seleções aleatórias de elementos.
+
+Ele é amplamente utilizado em simulações, amostragem estatística e outras aplicações que requerem aleatoriedade.
+
+Exemplo: Geração de números pseudo-aleatórios
+
+```{python}
+import random
+# Gerar um número aleatório entre 1 e 10
+random.seed(19) # Define a semente para reprodutibilidade
+numero_aleatorio = random.randint(1, 10)
+print(f"Número aleatório entre 1 e 10: {numero_aleatorio}")
+```
+
+```{python}
+# Gerar um número aleatório entre 0 e 1
+random.seed(42) # Define a semente para reprodutibilidade
+numero_aleatorio_float = random.random()
+print(f"Número aleatório entre 0 e 1: {numero_aleatorio_float}")
+
+```
+
+Exemplo: Embaralhamento de uma lista
+
+```{python}
+# Selecionar um elemento aleatório de uma lista
+import random
+random.seed(7) # Define a semente para reprodutibilidade
+elemento_aleatorio1 = random.choice(['maçã', 'banana', 'laranja','mamao','abacaxi'])
+elemento_aleatorio2 = random.choice(['maçã', 'banana', 'laranja','mamao','abacaxi'])
+print(f"Elementos aleatórios selecionados: {elemento_aleatorio1,elemento_aleatorio2}")
+
+```
+
+Note que definimos uma semente (seed) para garantir que os resultados sejam reprodutíveis. Alterar a semente resultará em uma sequência diferente de números aleatórios.
+
+Nos exemplos vistos, mude a semente (seed) e veja como o resultado muda.
+
+#### Trabalhando com pacotes externos
+
+O que devemos saber, basicamente sobre pacotes externos, antes de utilizá-los?
+
+- Instalação: A maioria dos pacotes não vem pré-instalada com o Python. Eles podem ser instalados usando gerenciadores de pacotes como pip ou conda.
+  - Exemplo: pip install nome_do_pacote
+  - Como estamos usando a IDE Rstudio, podemos instalar pacotes Python diretamente do terminal do RStudio ou usando a função  reticulate::py_install("nome_do_pacote") dentro de um script R.
+  - Depois de instalar os pacotes, você pode importá-los em seu código Python usando a palavra-chave import.
+  
+Documentação: É importante ler a documentação do pacote para entender suas funcionalidades, como usá-lo e quais dependências ele pode ter.
+- A documentação geralmente está disponível no site oficial do pacote ou em repositórios como o PyPI (Python Package Index).
+- No Rstudio, você pode usar a função reticulate::py_help("nome_do_pacote") para acessar a documentação do pacote instalado.
+
+Atualização: Pacotes são frequentemente atualizados para corrigir bugs ou adicionar novas funcionalidades. Mantenha seus pacotes atualizados para aproveitar essas melhorias.
+- Ou no Rstudio: reticulate::py_install("nome_do_pacote", pip = TRUE, upgrade = TRUE)
+
+Compatibilidade: Verifique a compatibilidade do pacote com a versão do Python que você está
+usando, bem como com outros pacotes que você possa ter instalado.
+
+##### Pacotes externos úteis e populares para Ciência de Dados em Python
+
+- NumPy: Biblioteca fundamental para computação científica, oferecendo suporte a arrays multidimensionais e funções matemáticas avançadas.
+- Pandas: Biblioteca para manipulação e análise de dados, fornecendo estruturas de dados como DataFrames.
+- Matplotlib: Biblioteca para criação de visualizações estáticas, animadas e interativas em Python.
+- Seaborn: Biblioteca baseada no Matplotlib, especializada em visualizações estatísticas.
+- statsmodels: Biblioteca para modelagem estatística, incluindo regressão linear, análise de séries temporais e testes estatísticos.
+- Scikit-learn: Biblioteca para aprendizado de máquina, oferecendo ferramentas para classificação, regressão e clusterização.
