@@ -1,0 +1,163 @@
+---
+title: "Semana 4 - slide 8"
+format: html
+editor: visual
+---
+
+# Semana 4 - slide 8
+
+## Introdução ao NumPy com Imagens
+
+### NumPy e Imagens
+
+Quando pensamos em imagens no computador, é importante lembrar que elas não passam de dados numéricos organizados em arrays.
+
+- Cada imagem pode ser vista como uma matriz de pixels.
+- Cada pixel contém informações de cor.
+- Para imagens coloridas no formato RGB, cada pixel é descrito por 3 valores numéricos (Red, Green, Blue).
+
+O NumPy é ideal para lidar com imagens, pois:
+
+- Trabalha com arrays multidimensionais.
+- Permite manipulação rápida e eficiente de grandes volumes de dados.
+- Suporta operações matemáticas vetorizadas, sem a necessidade de loops explícitos.
+
+Uma imagem colorida pode ser pensada como um array tridimensional:
+
+- O primeiro eixo representa a altura (número de linhas de pixels).
+- O segundo eixo representa a largura (número de colunas de pixels).
+- O terceiro eixo representa as camadas de cor (Red, Green e Blue).
+
+Por exemplo:
+
+Uma foto com 600 linhas × 800 colunas terá forma (600, 800, 3). O valor armazenado em imagem[10, 20, 0] corresponde à intensidade do vermelho no pixel da linha 10, coluna 20.
+
+O tipo de dado (dtype) da imagem é essencial:
+- Normalmente, imagens em RGB são armazenadas como inteiros sem sinal de 8 bits (uint8), variando de 0 a 255.
+- Isso significa que cada cor em cada pixel pode assumir 256 intensidades diferentes.
+
+Exemplo:
+- Preto → (0, 0, 0)
+- Branco → (255, 255, 255)
+- Vermelho → (255, 0, 0)
+
+O NumPy facilita a consulta:
+
+```{python}
+print(imagem.shape, imagem.dtype, imagem.min(), imagem.max())
+
+```
+
+Com NumPy podemos aplicar operações vetorizadas diretamente sobre a imagem:
+
+- Slicing para selecionar regiões específicas.
+- Indexação booleana para alterar valores condicionalmente.
+- Operações matemáticas como soma, multiplicação, senos, médias etc.
+
+Essas operações atuam em todos os pixels de uma só vez, aproveitando a eficiência interna do NumPy.
+Assim, conseguimos processar imagens grandes de forma muito mais rápida do que se usássemos for em Python.
+
+Em resumo, quando trabalhamos com imagens no NumPy:
+
+- Estamos manipulando arrays de três dimensões.
+- Cada operação é, na prática, uma manipulação matemática dos valores de cor.
+- Visualizamos o resultado com bibliotecas gráficas como o Matplotlib.
+
+Essa integração entre NumPy (dados) + Matplotlib (visualização) + scikit-image/skimage (leitura de arquivos) nos fornece uma base poderosa para explorar o básico de processamento de imagens.
+
+Módulos e Bibliotecas:
+
+```{python}
+import os
+import matplotlib.pyplot as plt
+import numpy as np
+from skimage import io #
+
+```
+
+Carregando e Inspecionando a Imagem
+O primeiro passo é carregar a imagem e inspecionar suas características:
+
+```{python}
+imagem = io.imread('predio_pa.jpg')
+print("shape:", imagem.shape,
+"| dtype:", imagem.dtype,
+"| min/max:", imagem.min(), imagem.max())
+```
+
+- shape → dimensões da imagem (altura, largura, canais).
+- dtype → tipo de dado dos pixels (geralmente uint8).
+- min/max → menor e maior valor dos pixels.
+
+Essas informações são fundamentais para entendermos como manipular a imagem corretamente.
+
+```{python}
+imagem=io.imread('predio_pa.jpg')
+print("shape:", imagem.shape,
+"| dtype:", imagem.dtype,
+"| min/max:", imagem.min(), imagem.max())
+```
+
+Visualizando a Imagem Original
+
+```{python}
+plt.imshow(imagem)
+plt.show()
+
+```
+
+Aqui usamos imshow para exibir a imagem carregada.
+
+- O Matplotlib interpreta os valores dos arrays como cores.
+- Como a imagem é colorida, os 3 canais são combinados para formar o resultado final.
+
+Esse é o momento de mostrar que, apesar de vermos uma foto, o Python está lidando apenas com números em uma matriz.
+
+Transformações Simples: Flip e Transpose
+
+```{python}
+plt.imshow(imagem[::-1, :]) # inverte linhas
+plt.imshow(imagem[:, ::-1]) # inverte colunas
+plt.imshow(imagem.transpose(1,0,2)) # transposta
+```
+
+- [::-1] → percorre o array de trás para frente (espelhamento).
+- transpose(1,0,2) → troca linhas por colunas, girando a imagem.
+
+Essas operações parecem visuais, mas são apenas reestruturações do array.
+
+Acessando Canais de Cor
+
+```{python}
+R, G, B = imagem[:,:,0], imagem[:,:,1], imagem[:,:,2]
+plt.imshow(R, cmap='Reds')
+plt.imshow(G, cmap='Greens')
+plt.imshow(B, cmap='Blues')
+
+```
+
+O terceiro índice seleciona o canal:
+- 0 → vermelho
+- 1 → verde
+- 2 → azul
+
+Com cmap conseguimos visualizar cada camada separadamente.
+
+Isso mostra como a imagem colorida é formada pela sobreposição de três matrizes em tons de cinza.
+
+Recortes, Subamostragem e Modificação de Pixels
+
+```{python}
+plt.imshow(imagem[0:300,0:350]) # recorte da imagem
+plt.imshow(imagem[::10,0::10]) # linhas/colunas de 10 em 10
+nova_imagem = np.where(imagem > 150, 250, 0)
+plt.imshow(nova_imagem)
+
+```
+
+- Recorte: seleciona apenas parte da foto, como se fosse um "zoom".
+- Subamostragem: pula pixels, gerando efeito pixelado.
+- np.where: altera condicionalmente, criando efeitos como limiarização (clarear/escurecer pixels).
+
+Essas operações simples já mostram o poder do NumPy para transformar imagens.
+
