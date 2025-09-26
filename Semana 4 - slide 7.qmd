@@ -37,3 +37,442 @@ Os arrays são uma das estruturas mais importantes na programação científica.
 É comum começar com listas em Python, pois elas são flexíveis e aceitam diferentes tipos de dados em uma mesma estrutura. Contudo, essa flexibilidade tem um preço: operações matemáticas não são naturais em listas e o consumo de memória é relativamente alto. Arrays, ao contrário, são projetados para lidar com coleções homogêneas e realizar cálculos de maneira muito mais eficiente. Embora eles tenham muitas semelhanças, Listas e Arrays são implementações diferentes em Python. Os arrays não são uma estrutura de dados nativa do Python. Por isso, para utilizá-los, é necessário importar um pacote (array ou NumPy).
 
 
+### Diferenças entre Lista e Array
+
+#### Listas
+
+1. A lista é usada para coletar itens que geralmente consistem em elementos de múltiplos tipos de dados.
+2. A lista não consegue realizar operações aritméticas.
+3. A lista pode conter elementos de diferentes tipos de dados.
+4. Em termos de flexibilidade, a lista é perfeita, pois permite fácil modificação dos dados.
+5. Consome mais memória. 
+6. Em uma lista, todos os elementos podem ser acessados sem a necessidade de um loop específico.
+7. É mais adequado para sequências curtas de dados.
+
+#### Arrays
+
+1. Um array também é um componente importante que coleta vários itens do mesmo tipo de dado.
+2. O array consegue realizar operações aritméticas.
+3. O array contém elementos que pertencem ao mesmo tipo de dado.
+4. Em termos de flexibilidade, o array não é tão adequado, já que não permite modificações tão fáceis.
+5. Consome menos memória que uma lista.
+6. Em um array, é obrigatório usar um loop para acessar os componentes.
+7. É mais adequado para sequências longas de dados.
+
+## Arrays
+
+No Python puro, existe o módulo array, que permite criar arrays homogêneos. Entretanto, seu uso é restrito e menos comum.
+
+Para ciência de dados, estatística e aprendizado de máquina, a comunidade científica adota o NumPy, que fornece arrays n-dimensionais poderosos e uma enorme variedade de funções matemáticas.
+
+### O Módulo Array
+
+Como vimos na tabela, o Python oferece uma estrutura de dados tipo array em seu ecossistema padrão, através do módulo array.
+
+Seu principal objetivo é fornecer uma maneira eficiente em termos de memória para armazenar uma sequência de itens de um mesmo tipo numérico.
+
+Vamos ver como ele funciona na prática e entender suas vantagens e, principalmente, suas limitações para a Ciência de Dados.
+
+### Criando um Array
+
+A sintaxe para criar um array é:
+
+import array
+array.array('typecode', [elementos])
+
+O 'typecode' é uma string que define o tipo dos elementos.
+
+
+### Typecodes do módulo array em Python
+
+O módulo array do Python cria arrays homogêneos, ou seja, todos os elementos devem ser do mesmo tipo. Para definir esse tipo, usamos um typecode (um único caractere que representa o tipo dos dados).
+
+Principais typecodes:
+
+Typecode  Tipo em C       Tipo em Python            Tamanho (bytes)
+
+'b'       signed char     int (valores -128 a 127)  1
+'B'       unsigned char   int (0 a 255)             1
+'h'       signed short    int                       2
+'H'       unsigned short  int                       2
+'i'       signed int      int                       4
+'I'       unsigned int    int                       4
+'f'       float           float                     4
+'d'       double          float                     8
+
+Exemplo:
+
+```{python}
+import array
+# Criando uma lista de inteiros (typecode 'i')
+numeros_inteiros = array.array('i', [1, 2, 3, 4, 5])
+type(numeros_inteiros)
+
+print(numeros_inteiros)
+
+# Criando uma lista de floats (typecode 'f')
+numeros_reais = array.array('f', [1.0, 2.5, 3.14, 4.0])
+print(numeros_reais)
+
+# Tentar usar tipos mistos gera erro
+try:
+array.array('i', [1, 2, 'texto'])
+except TypeError as e:
+print(f"\nErro: {e}")
+
+```
+
+## Indexação, slicing e laços
+
+```{python}
+import array as arr
+a = arr.array('i', [10, 20, 30, 40, 50])
+a[0], a[2], a[-1] # 10, 50
+a[:3], a[1:4], a[::2] # fatias
+for x in a: # iteração direta
+print(x)
+for i in range(len(a)):
+print(i, a[i]) # por índice
+```
+
+### Modificar, inserir e remover
+
+```{python}
+a = arr.array('i', [10, 20, 30])
+a[1] = 99 # altera
+a.append(40) # +1 valor
+a.extend([50, 60]) # +vários
+a.insert(1, 15) # insere na posição 1
+a.remove(10) # remove 1ª ocorrência do valor 10
+x = a.pop(2) # remove pelo índice 2
+
+```
+
+### Onde o array se destaca (e onde não)
+
+Vantagens:
+- Memória: Como todos os elementos são do mesmo tipo, o Python armazena os dados de forma compacta e contígua na memória, consumindo significativamente menos espaço que uma lista para grandes volumes de dados.
+
+Limitação Crucial:
+- Operações Matemáticas: A tabela indicava que arrays realizam operações aritméticas. Isso é uma meia-verdade. O módulo array NÃO suporta operações matemáticas em todos os elementos de uma vez (vetorização).
+
+Exemplo: 
+
+```{python}
+import array
+meu_array = array.array('i', [10, 20, 30])
+print(f"Saída: {meu_array * 2}")
+
+```
+
+Como podemos ver, multiplicar um array por 2 não multiplica cada elemento por 2, mas sim repete o array.
+
+Para fazer a operação, ainda precisamos de um loop:
+
+```{python}
+resultado = array.array('i', [elemento * 2 for elemento in meu_array])
+print(f"Resultado com loop: {resultado}")
+```
+
+- O módulo array é uma ferramenta útil para um propósito específico: armazenar grandes sequências de dados numéricos de forma compacta.
+- Ele é mais eficiente em memória do que as listas.
+- Porém, para a Ciência de Dados, suas limitações são diversas:
+  - Não realiza operações vetorizadas (código lento e verboso com loops).
+  - É estritamente unidimensional (não serve para matrizes ou tensores).
+  - Possui um conjunto muito limitado de funcionalidades.
+- Precisamos de uma ferramenta que combine a eficiência de memória de um array com o poder de realizar operações matemáticas complexas de forma simples e rápida em múltiplas dimensões.
+- É aqui que entra uma das bibliotecas fundamentais da computação científica em Python: o NumPy.
+
+## Pacote Numpy
+
+NumPy significa “Numerical Python”.
+
+Iniciado em 2006, o NumPy é um pacote voltado para computação científica e análise de dados.
+
+O NumPy utiliza um objeto de array multidimensional e oferece diversas funções e ferramentas para trabalhar com esses arrays.
+
+Além disso, o NumPy pode ser facilmente integrado a outros pacotes do ecossistema Python e também oferece recursos para interação com linguagens de programação como C e C++.
+
+Fornece recursos para álgebra linear, geração de números aleatórios e mais.
+
+Documentação em: [https://numpy.org/doc/stable/]
+
+O array n-dimensional do NumPy acelera o processamento de dados, permitindo operações rápidas e eficientes.
+
+Criar um array no NumPy é simples, podemos criar um array a partir de uma lista comum:
+
+```{python}
+import numpy as np
+a = np.array([1, 2, 3, 4, 5])
+b = np.array([5, 6, 7, 8, 9])
+
+```
+
+Esses objetos (vetores) agora permitem operações matemáticas vetorizadas, algo impossível em uma lista comum.
+
+
+A diferença fica clara quando realizamos operações.
+
+Multiplicar uma lista por 2 gera apenas uma repetição da lista.
+
+Já em um array NumPy, cada elemento é multiplicado por 2, gerando outro array.
+
+É justamente essa característica que torna os arrays tão úteis em cálculos numéricos.
+
+```{python}
+import numpy as np
+# Array NumPy
+meu_array = np.array([10, 20, 30])
+# Multiplicação por 2 é feita elemento a elemento
+resultado = meu_array * 2
+print(resultado)
+
+```
+
+A função np.array() também permite definir arrays de várias dimensões. Por exemplo:
+
+```{python}
+b = np.array([[1, 2], [3, 4]])
+type(b)
+
+prin(b)
+```
+
+Uma das vantagens do NumPy é o controle sobre o tipo dos dados.
+
+É possível especificar que um array deve ser inteiro, ponto flutuante ou mesmo valores complexos.
+
+Isso garante consistência e evita erros ao realizar operações matemáticas em larga escala.
+
+```{python}
+import numpy as np
+# array de inteiros
+arr_int = np.array([1, 2, 3, 4], dtype=int)
+print("Inteiros:", arr_int, "| Tipo:", arr_int.dtype)
+
+```
+
+```{python}
+# array de floats
+arr_float = np.array([1, 2, 3, 4], dtype=float)
+print("Floats:", arr_float, "| Tipo:", arr_float.dtype)
+```
+
+```{python}
+# array de números complexos
+arr_complex = np.array([1, 2, 3, 4], dtype=complex)
+print("Complexos:", arr_complex, "| Tipo:", arr_complex.dtype)
+```
+
+```{python}
+# operações coerentes com o tipo
+print("arr_int * 2 =", arr_int * 2) # continua inteiro
+
+print("arr_float / 2 =", arr_float / 2) # resultado float
+
+print("arr_complex + 1j =", arr_complex + 1j) # operação com números complexos
+
+```
+
+O acesso aos elementos de um array é feito por índices, assim como em listas. O primeiro elemento é acessado com a[0]. Também é possível acessar subconjuntos usando fatias: a[1:4] retorna os elementos de índice 1 até 3. Esse mecanismo é chamado de slicing e é fundamental para trabalhar com grandes volumes de dados.
+
+```{python}
+import numpy as np
+# Criando um array NumPy
+a = np.array([10, 20, 30, 40, 50, 60])
+# Acesso por índice
+print("Primeiro elemento (a[0]):", a[0]) # 10
+
+print("Terceiro elemento (a[2]):", a[2]) # 30
+
+# Slicing
+print("Elementos de índice 1 até 3 (a[1:4]):", a[1:4])
+
+# Saída: [20 30 40]
+print("Todos os elementos a partir do índice 2 (a[2:]):", a[2:])
+
+# Saída: [30 40 50 60]
+print("Elementos até o índice 3 (a[:4]):", a[:4])
+```
+
+Além do slicing tradicional, o NumPy oferece seleção por máscaras booleanas. Isso significa que podemos criar condições e extrair apenas os elementos que as satisfazem. Por exemplo, a[a > 2] retorna apenas os valores maiores que 2. Esse recurso é essencial em análises estatísticas e filtragem de dados.
+
+```{python}
+a = np.array([1, 2, 3, 4, 5, 6])
+# Máscara booleana: elementos maiores que 2
+masc = a > 2
+print("Máscara booleana:", masc)
+
+# Usando a máscara para filtrar elementos
+print("Elementos maiores que 2:", a[masc])
+
+# Outro exemplo: números pares
+print("Elementos pares:", a[a % 2 == 0])
+```
+
+Os arrays NumPy também permitem operações matriciais. A multiplicação entre matrizes pode ser feita com @ ou com a função np.dot().
+
+Isso aproxima o NumPy da álgebra linear tradicional e conecta Python a áreas como estatística multivariada e aprendizado de máquina.
+
+```{python}
+import numpy as np
+# Definindo duas matrizes 2x2
+A = np.array([[1, 2],
+[3, 4]])
+B = np.array([[5, 6],
+[7, 8]])
+# Multiplicação matricial
+print("A @ B =\n", A @ B)
+
+print("np.dot(A, B) =\n", np.dot(A, B))
+
+```
+
+Outra característica fundamental é a capacidade de manipular a forma (shape) dos arrays. Com reshape(), podemos transformar um vetor de tamanho 6 em uma matriz 2x3.
+
+Essa flexibilidade é útil para reorganizar dados de acordo com a análise desejada.
+
+```{python}
+import numpy as np
+# Criando um array 1D (vetor) com 6 elementos
+a = np.array([1, 2, 3, 4, 5, 6])
+print("Array original:", a)
+
+print("Shape original:", a.shape)
+
+# Transformando em uma matriz 2x3
+b = a.reshape(2, 3)
+print("\nArray reshape para 2x3:\n", b)
+
+# Também podemos criar uma matriz 3x2
+c = a.reshape(3, 2)
+print("\nArray reshape para 3x2:\n", c)
+
+```
+
+Podemos alterar um elemento diretamente pelo índice:
+
+```{python}
+a=np.array([1,2,3,4,5,6])
+print(a)
+
+a[0] = 10
+print(a)
+```
+
+```{python}
+import numpy as np
+A=np.array([[1,2,3],
+[4,5,6]])
+print(A)
+
+A[0,0] = 10
+print(A)
+
+A[0][0] = 20
+print(A)
+
+```
+
+Também é possível adicionar novas linhas, concatenar arrays e até remover elementos.
+
+Essa maleabilidade permite adaptar os dados a diferentes contextos de análise sem a necessidade de recriar estruturas do zero.
+
+```{python}
+arr = np.array([[1, 2, 3],
+[4, 5, 6]])
+print("Array inicial:\n", arr)
+
+# adicionar nova linha
+nova_linha = np.array([[7, 8, 9]])
+arr_expandido = np.vstack((arr, nova_linha))
+print("\nArray após adicionar nova linha:\n", arr_expandido)
+
+# concatenar arrays
+outro_arr = np.array([[10, 11, 12]])
+concatenado = np.concatenate((arr_expandido, outro_arr), axis=0)
+print("\nArray após concatenar outro array:\n", concatenado)
+
+```
+
+
+```{python}
+# Removendo a primeira coluna
+removido = np.delete(concatenado, 0, axis=1)
+print("\nArray após remover a primeira coluna:\n", removido)
+
+#Removendo a última linha
+removido2 = np.delete(removido, -1, axis=0)
+print("\nArray após remover a última linha:\n", removido2)
+```
+
+
+### Numpy Broadcasting
+
+Broadcasting é um mecanismo do NumPy que permite realizar operações matemáticas entre arrays de tamanhos ou formas diferentes, sem escrever laços explícitos.
+
+Em vez de duplicar os dados, o NumPy “expande virtualmente” os arrays menores para que tenham a mesma forma que os maiores, aplicando a operação elemento a elemento.
+
+```{python}
+A = np.array([[1, 2, 3],
+[4, 5, 6]])
+b = np.array([10, 20, 30])
+print(A + b)
+
+```
+
+### Funções no Numpy
+
+Um dos pontos fortes do NumPy é a grande coleção de funções matemáticas prontas para uso.
+
+Operações como soma, média, desvio padrão, logaritmos e exponenciais podem ser aplicadas diretamente ao array inteiro, sem a necessidade de laços de repetição. Isso deixa o código mais limpo e muito mais rápido.
+
+#### Funções Matemáticas no Numpy
+
+O NumPy oferece diversas funções matemáticas prontas.
+
+```{python}
+b = np.array([1, 2, 3, 4])
+print("Exponencial:", np.exp(b))
+
+```
+
+```{python}
+print("Logaritmo:", np.log(b))
+
+```
+
+```{python}
+print("Raiz quadrada:", np.sqrt(b))
+
+```
+
+```{python}
+a = np.array([1, 2, 3, 4, 5])
+print("Soma:", np.sum(a))
+
+print("Média:", np.mean(a))
+
+print("Variância:", np.var(a))
+
+print("Desvio padrão:", np.std(a))
+
+print("Mínimo:", np.min(a))
+
+print("Máximo:", np.max(a))
+
+```
+
+- Arrays (do módulo array) são coleções homogêneas, ou seja, todos os elementos devem ter o mesmo tipo. Isso os torna mais compactos e eficientes em memória que listas.
+
+- NumPy Arrays (ndarray) vão além: são estruturas altamente otimizadas para computação científica, suportando operações vetorizadas, broadcasting, funções matemáticas, manipulação de formas (reshape) e integração com bibliotecas em C e Fortran.
+
+
+## Listas x Arrays x NumPy
+
+Uma visão geral:
+
+- Listas: flexíveis, aceitam tipos variados, código mais simples.
+- Arrays (array): homogêneos, menos memória; bons para E/S binária e interoperabilidade.
+- NumPy Arrays: vetorização, álgebra, broadcasting; ideal para cálculo científico e desempenho.
+
