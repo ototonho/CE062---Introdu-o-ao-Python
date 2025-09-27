@@ -1,6 +1,9 @@
 # Desafio 2
 
+
 import numpy as np
-a = np.array([1, 2, 3, 4, 5])
-b = np.array([5, 6, 7, 8, 9])
+import pandas as pd
+
+PL_24_25 = pd.read_csv('D:/Neto/Cursos/Estatística/4º Semestre/Introdução ao Python para Ciência de Dados/desafios/desafio 2/E0.csv')
+
 
