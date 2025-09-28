@@ -68,18 +68,98 @@ print(stdN(cartoes))
 
 ## Máximo
 
+def maxN(cartoes):
+  array_ordenado = np.sort(cartoes)
+  return array_ordenado[-1]
 
+print(maxN(cartoes))
 
 ## Mínimo
 
+def minN(cartoes):
+  array_ordenado = np.sort(cartoes) 
+  return array_ordenado[0]
+
+print(minN(cartoes))
+
 ## Quartis
+
+def quartisN(array):
+    """Calcula Q1 (25%), Mediana/Q2 (50%) e Q3 (75%) com interpolação."""
+    
+    dados_ordenados = np.sort(array)
+    n = dados_ordenados.size
+    
+    # Esta é a função interna. Ela PRECISA ser definida AQUI.
+    def calcular_quartil(p):
+        L = (p / 100) * (n - 1) # Posição do índice (base 0)
+        i = int(L)
+        f = L - i
+        
+        # O bloco IF deve ter indentação correta
+        if i >= n - 1:
+            return dados_ordenados[n - 1]
+        
+        # Interpolação Linear
+        return dados_ordenados[i] + f * (dados_ordenados[i+1] - dados_ordenados[i])
+
+    # Chamadas finais, com a indentação correta (dentro de quartisN)
+    q1 = calcular_quartil(25)
+    mediana = calcular_quartil(50)
+    q3 = calcular_quartil(75)
+    
+    return q1, mediana, q3
+
+
+q1_np, mediana_np, q3_np = quartisN(cartoes)
+print(q1_np)
+print(mediana_np)
+print(q3_np)
 
 ### Desvio Interquartílico
 
+def iqrN(array):
+    q1, _, q3 = quartisN(array)
+    return q3 - q1
+
+print(iqrN(cartoes))
+
 ### Coeficiente de Variação
+
+def cvN(cartoes):
+    media = mediaN(cartoes)
+    desvio_padrao = stdN(cartoes)
+    
+    if media == 0:
+        return 0
+    
+    return (desvio_padrao / media) * 100
+  
+print(cvN(cartoes))
 
 ### Assimetria
 
+def skewN(cartoes):
+    
+    mu = mediaN(cartoes)
+    sigma = stdN(cartoes)
+    n = cartoes.size
+    
+    if n < 3:
+        return 0
+    
+    # Z-scores: (xi - mu) / sigma
+    z_scores = (cartoes - mu) / sigma
+    
+    # Soma dos cubos dos Z-scores
+    soma_cubos = np.sum(np.power(z_scores, 3))
+    
+    # Fator de correção para a amostra
+    fator_correcao = n / ((n - 1) * (n - 2))
+    
+    return fator_correcao * soma_cubos
+  
+print(skewN(cartoes))
 
 # ---- Análise em Pandas
 
