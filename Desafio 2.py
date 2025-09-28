@@ -85,9 +85,28 @@ print(minP)
 
 ## Quartis
 
+cartoesPD = df_total_cartoes['YellowCards']
+
+quartis = cartoesPD.quantile([0.25, 0.5, 0.75])
+
+print(quartis[0.25])
+print(quartis[0.50])
+print(quartis[0.75])
 
 ### Desvio Interquartílico
 
+q1PD = quartis[0.25]
+q3PD = quartis[0.75]
+
+iqrPD = q3PD - q1PD
+print(iqrPD)
+
 ### Coeficiente de Variação
 
+cv_pandas = (stdP / mediaP) * 100
+print(cv_pandas)
+
 ### Assimetria
+
+assimPD = cartoesPD.skew()
+print(assimPD)
