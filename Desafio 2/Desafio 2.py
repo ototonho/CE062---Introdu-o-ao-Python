@@ -15,7 +15,7 @@ PL_24_25 = pd.read_csv('D:/Neto/Cursos/Estatística/4º Semestre/Introdução ao
 df_Mand = PL_24_25[['HomeTeam', 'HY']].copy()
 df_Mand.columns = ['Team', 'YellowCards']
 
-# V. Times visitantes
+# V. Times visitantes 
 
 df_Vis = PL_24_25[['AwayTeam', 'AY']].copy()
 df_Vis.columns = ['Team', 'YellowCards']
