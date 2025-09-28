@@ -34,15 +34,41 @@ cartoes = df_total_cartoes['YellowCards'].values
 
 ## Média
 
+def mediaN(cartoes):
+  somaN = np.sum(cartoes)
+  nN = cartoes.size
+  media = somaN / nN
+  return media
 
+print(mediaN(cartoes))
+
+mediaN = np.sum(cartoes) / cartoes.size
+print(mediaN)
 
 ## Variância Amostral
 
+def varN(cartoes):
+  mv = mediaN(cartoes)
+  desvios_quad = np.power(cartoes - mv, 2)
+  soma_desvios = np.sum(desvios_quad)
+  nv = cartoes.size
+  var = soma_desvios / (nv - 1)
+  return var
 
+print(varN(cartoes))
 
 ## Desvio Padrão
 
+def stdN(cartoes):
+  v = varN(cartoes)
+  desv = np.sqrt(v)
+  return desv
+
+print(stdN(cartoes))
+
 ## Máximo
+
+
 
 ## Mínimo
 
