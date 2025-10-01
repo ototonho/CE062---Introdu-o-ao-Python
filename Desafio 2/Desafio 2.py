@@ -66,6 +66,8 @@ def stdN(cartoes):
 
 print(stdN(cartoes))
 
+
+
 ## Máximo
 
 def maxN(cartoes):
@@ -171,12 +173,12 @@ print(mediaP)
 
 ## Variância Amostral
 
-varP = cartoes.var()
+varP = cartoes.var(ddof = 1)
 print(varP)
 
 ## Desvio Padrão
 
-stdP = cartoes.std()
+stdP = cartoes.std(ddof = 1)
 print(stdP)
 
 ## Máximo
