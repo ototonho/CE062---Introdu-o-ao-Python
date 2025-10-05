@@ -153,3 +153,90 @@ print(f"Assimetria (Skewness): {assimetria:.4f}")
 
 # ---- Análise em Pandas
 
+cartoes_mandante_p = cartoes_merged['Home_YellowCards']
+cartoes_visitante_p = cartoes_merged['Away_YellowCards']
+cartoes_p = cartoes_merged['Total_YellowCards']
+
+dados_pandas = {
+    "Cartões Mandante": cartoes_mandante_p,
+    "Cartões Visitante": cartoes_visitante_p,
+    "Total Cartões": cartoes_p
+}
+
+## Função 1 - Média, Variância e Desvio Padrão (Pandas)
+
+print("=== FUNÇÃO 1: Média, Variância e Desvio Padrão (Pandas)")
+
+for nome, serie in dados_pandas.items():
+    
+    media = serie.mean()
+    variancia = serie.var(ddof=1) # ddof=1 para Variância Amostral
+    desvio_padrao = serie.std(ddof=1) # ddof=1 para Desvio Padrão Amostral
+
+    print(f"--- {nome} ---")
+    print(f"Média: {media:.4f}")
+    print(f"Variância Amostral: {variancia:.4f}")
+    print(f"Desvio Padrão Amostral: {desvio_padrao:.4f}\n")
+
+dados_pandas = {
+    "Cartões Mandante": cartoes_mandante_p,
+    "Cartões Visitante": cartoes_visitante_p,
+    "Total Cartões": cartoes_p
+}
+
+## Função 2 - Máx, Mín, Quartis (Pandas)
+
+print("FUNÇÃO 2: Máximo, Mínimo, Quartis e IIQ (Pandas)")
+
+for nome, serie in dados_pandas.items():
+    # O método .describe() do Pandas calcula a maioria dessas métricas de uma vez
+    descritivo = serie.describe()
+    
+    maximo = descritivo['max']
+    minimo = descritivo['min']
+    q1 = descritivo['25%']
+    mediana = descritivo['50%']
+    q3 = descritivo['75%']
+    iiq = q3 - q1
+
+    print(f"--- {nome} ---")
+    print(f"Máximo: {maximo:.4f}")
+    print(f"Mínimo: {minimo:.4f}")
+    print(f"Q1 (25%): {q1:.4f}")
+    print(f"Q2 (Mediana/50%): {mediana:.4f}")
+    print(f"Q3 (75%): {q3:.4f}")
+    print(f"Desvio Interquartílico (IIQ): {iiq:.4f}\n")
+
+dados_pandas = {
+    "Cartões Mandante": cartoes_mandante_p,
+    "Cartões Visitante": cartoes_visitante_p,
+    "Total Cartões": cartoes_p
+}
+
+## Função 3 - Coeficiente de Variação e Assimetria (Pandas)
+
+print("FUNÇÃO 3: Coeficiente de Variação e Assimetria (Pandas)")
+
+for nome, serie in dados_pandas.items():
+    media = serie.mean()
+    desvio_padrao = serie.std(ddof=1)
+    
+    # Coeficiente de Variação (CV)
+    if media == 0:
+        cv = np.nan
+    else:
+        cv = (desvio_padrao / media) * 100
+        
+    # Assimetria (Skewness): O Pandas tem um método .skew() nativo
+    # que, por padrão, já usa o ajuste amostral (bias=False)
+    assimetria = serie.skew() 
+    
+    print(f"--- {nome} ---")
+    print(f"Coeficiente de Variação (CV): {cv:.4f}%")
+    print(f"Assimetria (Skewness): {assimetria:.4f}\n")
+    
+dados_pandas = {
+    "Cartões Mandante": cartoes_mandante_p,
+    "Cartões Visitante": cartoes_visitante_p,
+    "Total Cartões": cartoes_p
+}
