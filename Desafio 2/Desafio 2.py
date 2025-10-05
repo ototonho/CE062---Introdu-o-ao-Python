@@ -3,6 +3,7 @@
 
 import numpy as np
 import pandas as pd
+from scipy.stats import skew 
 
 # ---- Importação do conjunto de dados
 
@@ -12,209 +13,143 @@ PL_24_25 = pd.read_csv('D:/Neto/Cursos/Estatística/4º Semestre/Introdução ao
 
 # M. Times mandantes
 
-df_Mand = PL_24_25[['HomeTeam', 'HY']].copy()
-df_Mand.columns = ['Team', 'YellowCards']
+df_Mand = PL_24_25.groupby('HomeTeam')['HY'].sum().reset_index()
+df_Mand.columns = ['Team', 'Home_YellowCards']
 
 # V. Times visitantes 
 
-df_Vis = PL_24_25[['AwayTeam', 'AY']].copy()
-df_Vis.columns = ['Team', 'YellowCards']
+df_Vis = PL_24_25.groupby('AwayTeam')['AY'].sum().reset_index()
+df_Vis.columns = ['Team', 'Away_YellowCards']
 
 # C. Combinando o total de cartões dos times
 
-df_total_cartoes = pd.concat([df_Mand, df_Vis]) \
+df_Mand_temp = PL_24_25[['HomeTeam', 'HY']].copy()
+df_Mand_temp.columns = ['Team', 'YellowCards']
+df_Vis_temp = PL_24_25[['AwayTeam', 'AY']].copy()
+df_Vis_temp.columns = ['Team', 'YellowCards']
+df_total_cartoes = pd.concat([df_Mand_temp, df_Vis_temp]) \
                      .groupby('Team')['YellowCards'].sum() \
-                     .reset_index() # rodar tudo junto
+                     .reset_index()
+                     
+df_total_cartoes.columns = ['Team', 'Total_YellowCards']
+
+cartoes_merged = pd.merge(df_Mand, df_Vis, on='Team', how='outer')
+cartoes_merged = pd.merge(cartoes_merged, df_total_cartoes, on='Team', how='outer')
                      
 # A. Array numpy
 
-cartoes = df_total_cartoes['YellowCards'].values
+cartoes = cartoes_merged['Total_YellowCards'].values
+cartoes_mandante = cartoes_merged['Home_YellowCards'].values
+cartoes_visitante = cartoes_merged['Away_YellowCards'].values
 
 # ---- Análise em Numpy
 
-## Média
+## Função 1 - média, variância e desvio padrão
 
-def mediaN(cartoes):
-  somaN = np.sum(cartoes)
-  nN = cartoes.size
-  media = somaN / nN
-  return media
+def medidas_tendencia_dispersao(arr):
+  media = np.mean(arr)
+  variancia_amostral = np.var(arr, ddof=1)
+  desvio_padrao_amostral = np.std(arr, ddof=1)
+  
+  return media, variancia_amostral, desvio_padrao_amostral
 
-print(mediaN(cartoes))
+media, variancia, desvio_padrao = medidas_tendencia_dispersao(cartoes_mandante)
+print("--- Função 1: Média, Variância e Desvio Padrão ---")
+print(f"Média: {media:.4f}")
+print(f"Variância Amostral: {variancia:.4f}")
+print(f"Desvio Padrão Amostral: {desvio_padrao:.4f}\n")
 
-mediaN = np.sum(cartoes) / cartoes.size
-print(mediaN)
+media, variancia, desvio_padrao = medidas_tendencia_dispersao(cartoes_visitante)
+print("--- Função 1: Média, Variância e Desvio Padrão ---")
+print(f"Média: {media:.4f}")
+print(f"Variância Amostral: {variancia:.4f}")
+print(f"Desvio Padrão Amostral: {desvio_padrao:.4f}\n")
 
-## Variância Amostral
+media, variancia, desvio_padrao = medidas_tendencia_dispersao(cartoes)
+print("--- Função 1: Média, Variância e Desvio Padrão ---")
+print(f"Média: {media:.4f}")
+print(f"Variância Amostral: {variancia:.4f}")
+print(f"Desvio Padrão Amostral: {desvio_padrao:.4f}\n")
 
-def varN(cartoes):
-  mv = mediaN(cartoes)
-  desvios_quad = np.power(cartoes - mv, 2)
-  soma_desvios = np.sum(desvios_quad)
-  nv = cartoes.size
-  var = soma_desvios / (nv - 1)
-  return var
+## Função 2 - máx, mín, quartis
 
-print(varN(cartoes))
-
-## Desvio Padrão
-
-def stdN(cartoes):
-  v = varN(cartoes)
-  desv = np.sqrt(v)
-  return desv
-
-print(stdN(cartoes))
-
-
-
-## Máximo
-
-def maxN(cartoes):
-  array_ordenado = np.sort(cartoes)
-  return array_ordenado[-1]
-
-print(maxN(cartoes))
-
-## Mínimo
-
-def minN(cartoes):
-  array_ordenado = np.sort(cartoes) 
-  return array_ordenado[0]
-
-print(minN(cartoes))
-
-## Quartis
-
-def quartisN(array):
-    """Calcula Q1 (25%), Mediana/Q2 (50%) e Q3 (75%) com interpolação."""
+def medidas_posicao_quartis(arr):
     
-    dados_ordenados = np.sort(array)
-    n = dados_ordenados.size
+    # Máximo e Mínimo
+    maximo = np.max(arr)
+    minimo = np.min(arr)
     
-    # Esta é a função interna. Ela PRECISA ser definida AQUI.
-    def calcular_quartil(p):
-        L = (p / 100) * (n - 1) # Posição do índice (base 0)
-        i = int(L)
-        f = L - i
-        
-        # O bloco IF deve ter indentação correta
-        if i >= n - 1:
-            return dados_ordenados[n - 1]
-        
-        # Interpolação Linear
-        return dados_ordenados[i] + f * (dados_ordenados[i+1] - dados_ordenados[i])
-
-    # Chamadas finais, com a indentação correta (dentro de quartisN)
-    q1 = calcular_quartil(25)
-    mediana = calcular_quartil(50)
-    q3 = calcular_quartil(75)
+    # Quartis: np.percentile(arr, [25, 50, 75]) retorna Q1, Q2 (Mediana) e Q3
+    q1, q2_mediana, q3 = np.percentile(arr, [25, 50, 75])
     
-    return q1, mediana, q3
-
-
-q1_np, mediana_np, q3_np = quartisN(cartoes)
-print(q1_np)
-print(mediana_np)
-print(q3_np)
-
-### Desvio Interquartílico
-
-def iqrN(array):
-    q1, _, q3 = quartisN(array)
-    return q3 - q1
-
-print(iqrN(cartoes))
-
-### Coeficiente de Variação
-
-def cvN(cartoes):
-    media = mediaN(cartoes)
-    desvio_padrao = stdN(cartoes)
+    # Desvio Interquartílico (IIQ) é a diferença entre Q3 e Q1
+    iiq = q3 - q1
     
+    return {
+        "Máximo": maximo,
+        "Mínimo": minimo,
+        "Q1 (25%)": q1,
+        "Q2 (Mediana/50%)": q2_mediana,
+        "Q3 (75%)": q3,
+        "Desvio Interquartílico (IIQ)": iiq
+    }
+
+
+resultados_quartis = medidas_posicao_quartis(cartoes_mandante)
+print("--- Função 2: Máximo, Mínimo, Quartis e IIQ ---")
+for chave, valor in resultados_quartis.items():
+    print(f"{chave}: {valor:.4f}")
+print()
+
+resultados_quartis = medidas_posicao_quartis(cartoes_visitante)
+print("--- Função 2: Máximo, Mínimo, Quartis e IIQ ---")
+for chave, valor in resultados_quartis.items():
+    print(f"{chave}: {valor:.4f}")
+print()
+
+resultados_quartis = medidas_posicao_quartis(cartoes)
+print("--- Função 2: Máximo, Mínimo, Quartis e IIQ ---")
+for chave, valor in resultados_quartis.items():
+    print(f"{chave}: {valor:.4f}")
+print()
+
+## Função 3 - coeficiente de variação e assimetria
+
+def coeficiente_variacao_assimetria(arr):
+    
+    # Desvio Padrão Amostral (necessário para o CV)
+    desvio_padrao_amostral = np.std(arr, ddof=1)
+    
+    # Média (necessário para o CV)
+    media = np.mean(arr)
+    
+    # Coeficiente de Variação (CV): (Desvio Padrão / Média) * 100
+    # Adiciono uma verificação para evitar divisão por zero, embora seja raro em dados reais.
     if media == 0:
-        return 0
+        cv = np.nan
+    else:
+        cv = (desvio_padrao_amostral / media) * 100
+        
+    # Assimetria (Skewness): utiliza a função da biblioteca SciPy, recomendada para arrays NumPy
+    # bias=False: Corrige o viés para amostras (ajustada para populações menores)
+    assimetria = skew(arr, bias=False)
     
-    return (desvio_padrao / media) * 100
-  
-print(cvN(cartoes))
+    return cv, assimetria
 
-### Assimetria
+cv, assimetria = coeficiente_variacao_assimetria(cartoes_mandante)
+print("--- Função 3: Coeficiente de Variação e Assimetria ---")
+print(f"Coeficiente de Variação (CV): {cv:.4f}%")
+print(f"Assimetria (Skewness): {assimetria:.4f}")
 
-def skewN(cartoes):
-    
-    mu = mediaN(cartoes)
-    sigma = stdN(cartoes)
-    n = cartoes.size
-    
-    if n < 3:
-        return 0
-    
-    # Z-scores: (xi - mu) / sigma
-    z_scores = (cartoes - mu) / sigma
-    
-    # Soma dos cubos dos Z-scores
-    soma_cubos = np.sum(np.power(z_scores, 3))
-    
-    # Fator de correção para a amostra
-    fator_correcao = n / ((n - 1) * (n - 2))
-    
-    return fator_correcao * soma_cubos
-  
-print(skewN(cartoes))
+cv, assimetria = coeficiente_variacao_assimetria(cartoes_visitante)
+print("--- Função 3: Coeficiente de Variação e Assimetria ---")
+print(f"Coeficiente de Variação (CV): {cv:.4f}%")
+print(f"Assimetria (Skewness): {assimetria:.4f}")
+
+cv, assimetria = coeficiente_variacao_assimetria(cartoes)
+print("--- Função 3: Coeficiente de Variação e Assimetria ---")
+print(f"Coeficiente de Variação (CV): {cv:.4f}%")
+print(f"Assimetria (Skewness): {assimetria:.4f}")
 
 # ---- Análise em Pandas
 
-
-## Média
-
-mediaP = cartoes.mean()
-print(mediaP)
-
-## Variância Amostral
-
-varP = cartoes.var(ddof = 1)
-print(varP)
-
-## Desvio Padrão
-
-stdP = cartoes.std(ddof = 1)
-print(stdP)
-
-## Máximo
-
-maxP = cartoes.max()
-print(maxP)
-
-## Mínimo
-
-minP = cartoes.min()
-print(minP)
-
-## Quartis
-
-cartoesPD = df_total_cartoes['YellowCards']
-
-quartis = cartoesPD.quantile([0.25, 0.5, 0.75])
-
-print(quartis[0.25])
-print(quartis[0.50])
-print(quartis[0.75])
-
-### Desvio Interquartílico
-
-q1PD = quartis[0.25]
-q3PD = quartis[0.75]
-
-iqrPD = q3PD - q1PD
-print(iqrPD)
-
-### Coeficiente de Variação
-
-cv_pandas = (stdP / mediaP) * 100
-print(cv_pandas)
-
-### Assimetria
-
-assimPD = cartoesPD.skew()
-print(assimPD)
