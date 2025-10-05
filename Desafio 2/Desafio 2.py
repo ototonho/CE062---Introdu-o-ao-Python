@@ -54,19 +54,19 @@ def medidas_tendencia_dispersao(arr):
   return media, variancia_amostral, desvio_padrao_amostral
 
 media, variancia, desvio_padrao = medidas_tendencia_dispersao(cartoes_mandante)
-print("--- Função 1: Média, Variância e Desvio Padrão ---")
+print("Função 1: Média, Variância e Desvio Padrão")
 print(f"Média: {media:.4f}")
 print(f"Variância Amostral: {variancia:.4f}")
 print(f"Desvio Padrão Amostral: {desvio_padrao:.4f}\n")
 
 media, variancia, desvio_padrao = medidas_tendencia_dispersao(cartoes_visitante)
-print("--- Função 1: Média, Variância e Desvio Padrão ---")
+print("Função 1: Média, Variância e Desvio Padrão")
 print(f"Média: {media:.4f}")
 print(f"Variância Amostral: {variancia:.4f}")
 print(f"Desvio Padrão Amostral: {desvio_padrao:.4f}\n")
 
 media, variancia, desvio_padrao = medidas_tendencia_dispersao(cartoes)
-print("--- Função 1: Média, Variância e Desvio Padrão ---")
+print("Função 1: Média, Variância e Desvio Padrão")
 print(f"Média: {media:.4f}")
 print(f"Variância Amostral: {variancia:.4f}")
 print(f"Desvio Padrão Amostral: {desvio_padrao:.4f}\n")
@@ -96,19 +96,19 @@ def medidas_posicao_quartis(arr):
 
 
 resultados_quartis = medidas_posicao_quartis(cartoes_mandante)
-print("--- Função 2: Máximo, Mínimo, Quartis e IIQ ---")
+print("Função 2: Máximo, Mínimo, Quartis e IIQ")
 for chave, valor in resultados_quartis.items():
     print(f"{chave}: {valor:.4f}")
 print()
 
 resultados_quartis = medidas_posicao_quartis(cartoes_visitante)
-print("--- Função 2: Máximo, Mínimo, Quartis e IIQ ---")
+print("Função 2: Máximo, Mínimo, Quartis e IIQ")
 for chave, valor in resultados_quartis.items():
     print(f"{chave}: {valor:.4f}")
 print()
 
 resultados_quartis = medidas_posicao_quartis(cartoes)
-print("--- Função 2: Máximo, Mínimo, Quartis e IIQ ---")
+print("Função 2: Máximo, Mínimo, Quartis e IIQ")
 for chave, valor in resultados_quartis.items():
     print(f"{chave}: {valor:.4f}")
 print()
@@ -137,17 +137,17 @@ def coeficiente_variacao_assimetria(arr):
     return cv, assimetria
 
 cv, assimetria = coeficiente_variacao_assimetria(cartoes_mandante)
-print("--- Função 3: Coeficiente de Variação e Assimetria ---")
+print("Função 3: Coeficiente de Variação e Assimetria")
 print(f"Coeficiente de Variação (CV): {cv:.4f}%")
 print(f"Assimetria (Skewness): {assimetria:.4f}")
 
 cv, assimetria = coeficiente_variacao_assimetria(cartoes_visitante)
-print("--- Função 3: Coeficiente de Variação e Assimetria ---")
+print("Função 3: Coeficiente de Variação e Assimetria")
 print(f"Coeficiente de Variação (CV): {cv:.4f}%")
 print(f"Assimetria (Skewness): {assimetria:.4f}")
 
 cv, assimetria = coeficiente_variacao_assimetria(cartoes)
-print("--- Função 3: Coeficiente de Variação e Assimetria ---")
+print("Função 3: Coeficiente de Variação e Assimetria")
 print(f"Coeficiente de Variação (CV): {cv:.4f}%")
 print(f"Assimetria (Skewness): {assimetria:.4f}")
 
@@ -173,7 +173,7 @@ for nome, serie in dados_pandas.items():
     variancia = serie.var(ddof=1) # ddof=1 para Variância Amostral
     desvio_padrao = serie.std(ddof=1) # ddof=1 para Desvio Padrão Amostral
 
-    print(f"--- {nome} ---")
+    print(f"{nome}")
     print(f"Média: {media:.4f}")
     print(f"Variância Amostral: {variancia:.4f}")
     print(f"Desvio Padrão Amostral: {desvio_padrao:.4f}\n")
@@ -199,7 +199,7 @@ for nome, serie in dados_pandas.items():
     q3 = descritivo['75%']
     iiq = q3 - q1
 
-    print(f"--- {nome} ---")
+    print(f"{nome}")
     print(f"Máximo: {maximo:.4f}")
     print(f"Mínimo: {minimo:.4f}")
     print(f"Q1 (25%): {q1:.4f}")
@@ -231,7 +231,7 @@ for nome, serie in dados_pandas.items():
     # que, por padrão, já usa o ajuste amostral (bias=False)
     assimetria = serie.skew() 
     
-    print(f"--- {nome} ---")
+    print(f"{nome}")
     print(f"Coeficiente de Variação (CV): {cv:.4f}%")
     print(f"Assimetria (Skewness): {assimetria:.4f}\n")
     
