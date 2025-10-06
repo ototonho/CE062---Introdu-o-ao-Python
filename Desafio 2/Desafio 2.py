@@ -170,8 +170,8 @@ print("=== FUNÇÃO 1: Média, Variância e Desvio Padrão (Pandas)")
 for nome, serie in dados_pandas.items():
     
     media = serie.mean()
-    variancia = serie.var(ddof=1) # ddof=1 para Variância Amostral
-    desvio_padrao = serie.std(ddof=1) # ddof=1 para Desvio Padrão Amostral
+    variancia = serie.var(ddof=1) 
+    desvio_padrao = serie.std(ddof=1) 
 
     print(f"{nome}")
     print(f"Média: {media:.4f}")
@@ -189,7 +189,7 @@ dados_pandas = {
 print("FUNÇÃO 2: Máximo, Mínimo, Quartis e IIQ (Pandas)")
 
 for nome, serie in dados_pandas.items():
-    # O método .describe() do Pandas calcula a maioria dessas métricas de uma vez
+    # .describe() no Pandas calcula a maioria dessas métricas de uma vez
     descritivo = serie.describe()
     
     maximo = descritivo['max']
@@ -227,8 +227,7 @@ for nome, serie in dados_pandas.items():
     else:
         cv = (desvio_padrao / media) * 100
         
-    # Assimetria (Skewness): O Pandas tem um método .skew() nativo
-    # que, por padrão, já usa o ajuste amostral (bias=False)
+    # Assimetria (Skewness): .skew() nativo do pandas
     assimetria = serie.skew() 
     
     print(f"{nome}")
