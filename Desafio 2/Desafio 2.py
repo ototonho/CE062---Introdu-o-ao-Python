@@ -46,6 +46,8 @@ cartoes_visitante = cartoes_merged['Away_YellowCards'].values
 
 ## Função 1 - média, variância e desvio padrão
 
+print("FUNÇÃO 1: Média, Variância e Desvio Padrão (Numpy)")
+
 def medidas_tendencia_dispersao(arr):
   media = np.mean(arr)
   variancia_amostral = np.var(arr, ddof=1)
@@ -72,6 +74,8 @@ print(f"Variância Amostral: {variancia:.4f}")
 print(f"Desvio Padrão Amostral: {desvio_padrao:.4f}\n")
 
 ## Função 2 - máx, mín, quartis
+
+print("FUNÇÃO 2: Máximo, Mínimo, Quartis e IIQ (Numpy)")
 
 def medidas_posicao_quartis(arr):
     
@@ -114,6 +118,8 @@ for chave, valor in resultados_quartis.items():
 print()
 
 ## Função 3 - coeficiente de variação e assimetria
+
+print("FUNÇÃO 3: Coeficiente de Variação e Assimetria (Numpy)")
 
 def coeficiente_variacao_assimetria(arr):
     
@@ -165,7 +171,7 @@ dados_pandas = {
 
 ## Função 1 - Média, Variância e Desvio Padrão (Pandas)
 
-print("=== FUNÇÃO 1: Média, Variância e Desvio Padrão (Pandas)")
+print("FUNÇÃO 1: Média, Variância e Desvio Padrão (Pandas)")
 
 for nome, serie in dados_pandas.items():
     
