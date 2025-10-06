@@ -79,7 +79,7 @@ def medidas_posicao_quartis(arr):
     maximo = np.max(arr)
     minimo = np.min(arr)
     
-    # Quartis: np.percentile(arr, [25, 50, 75]) retorna Q1, Q2 (Mediana) e Q3
+    # Quartis: np.percentile(arr, [25, 50, 75]) - Q1, Q2 (Mediana) e Q3
     q1, q2_mediana, q3 = np.percentile(arr, [25, 50, 75])
     
     # Desvio Interquartílico (IIQ) é a diferença entre Q3 e Q1
