@@ -29,7 +29,7 @@ df_Vis_temp = PL_24_25[['AwayTeam', 'AY']].copy()
 df_Vis_temp.columns = ['Team', 'YellowCards']
 df_total_cartoes = pd.concat([df_Mand_temp, df_Vis_temp]) \
                      .groupby('Team')['YellowCards'].sum() \
-                     .reset_index()
+                     .reset_index() # rodar junto
                      
 df_total_cartoes.columns = ['Team', 'Total_YellowCards']
 
