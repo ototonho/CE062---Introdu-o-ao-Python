@@ -6,7 +6,7 @@ editor: visual
 
 # Semana 7 - Slide 10
 
-feito no 'https://sqliteonline.com/' com dados de 'https://docs.ufpr.br/~lmelo/sqlcursos.txt'
+feito no 'https://sqliteonline.com/' com dados de 'https://docs.ufpr.br/\~lmelo/sqlcursos.txt'
 
 ```{SQL}
 CREATE TABLE `cursos` (
@@ -73,10 +73,36 @@ Sugestão de material complementar: `https://www.w3schools.com/sql/`
 
 ### Tabelas
 
-Organiza os dados de forma lógica em colunas e linhas
+O conceito central do modelo relacional é a tabela, que organiza os dados de forma lógica e intuitiva em colunas e linhas:
+
+- Colunas (Campos ou atributos): Representam as características de um dado (ex: número do processo, vara). Cada coluna possui um tipo de dado específico, conhecido como "Domínio de Dado" (ex: TEXTM INTEGER, REAL), que define o conjunto de valores possíveis.
+- Linhas (Tuplas ou Registro): Representam uma instância individual de um dado, contendo os valores para cada coluna. Por exemplo, uma linha na tabela *processos* conteria '001234' para o número de um processo e 'Vara Cível de Curitiba' para o campo *vara*.
 
 Exemplo Prático
 
-```{python}
+- **foi realizado e está em outro arquivo**.
 
-```
+## Python e MySQL em Aplicação de BI
+
+Contexto: Criaremos um código Python para realizar a operação de ETL dentro de um problema de Business Inteligence (Inteligência de Negócio).
+
+Conceito utilizados em Python:
+
+- conexão com banco através da biblioteca pymysql;
+- criação de queries e views;
+- exercução de queries no python;
+- importação de pacotes;
+- criação de funções;
+- boas práticas na criação de scripts.
+
+## Business Intelligence
+
+Conjunto de processor e tecnologias que permitem a transformação de dados em informação, com o intuito de apoiar a tomada de decisões.
+Em BI, os dados são coletados das bases de dados transicionais (sistemas) e armazenados em um DataWarehouse(DW).
+
+- Bases Transacionais
+- Data Warehouse
+- Processo de BI
+- Pacote PyMySQL
+- Comandos Principais
+- Estrutura de um script Python/MySQL
