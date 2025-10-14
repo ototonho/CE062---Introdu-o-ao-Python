@@ -1,0 +1,21 @@
+---
+title: "Slide 11"
+format: html
+editor: visual
+---
+
+# Slide 11
+
+## **Matplotlib**
+
+```{python}
+import matplotlib.pyplot as plt
+
+# from matplotlib import pyplot as plt
+
+```
+
+É a principal biblioteca para visualização de dados em Python [Site da biblioteca](https://matplotlib.org/)
+O matplotlib é a biblioteca base da visualização de dados em Python.
+Focaremos no módulo pyplot, que fornece uma interface simples para criar figuras e eixos e desenhar marcas gráficas.
+

@@ -12,3 +12,8 @@
 # use_git_config(user.name = "ototonho",
 #               user.email = "antonio.steffen@ufpr.br")
 # gitcreds::gitcreds_set()
+
+library(usethis)
+library(reticulate)
+
+reticulate::py_install("matplotlib")
