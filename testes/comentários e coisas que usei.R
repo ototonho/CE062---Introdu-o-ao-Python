@@ -3,7 +3,9 @@
 # reticulate::repl_python()
 # reticulate::py_to_r()
 # reticulate::py_install("numpy")
-# reticulate::py_install("pandas")
+reticulate::py_install("pandas")
+reticulate::py_install("seaborn")
+
 
 # library(usethis)
 # usethis::create_from_github()

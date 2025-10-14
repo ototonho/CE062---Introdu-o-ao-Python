@@ -19,3 +19,338 @@ import matplotlib.pyplot as plt
 O matplotlib é a biblioteca base da visualização de dados em Python.
 Focaremos no módulo pyplot, que fornece uma interface simples para criar figuras e eixos e desenhar marcas gráficas.
 
+### Primeiro Exemplo
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+x = np.linspace(0, 10, 100)
+print(x)
+y = np.sin(x)
+plt.plot(x, y)
+plt.title("Primeiro gráfico com Matplotlib")
+plt.xlabel("x")
+plt.ylabel("sin(x)")
+plt.show()
+```
+
+### Segundo Exemplo
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+
+plt.figure()
+x = np.array([1, 2, 3, 4, 5])
+y1 = np.array([1, 5, 10, 15, 20])
+y2 = np.array([5, 10, 20, 30, 40])
+y3 = np.array([15, 15, 15, 15, 15])
+plt.plot(x, y1, linestyle = "--", color = "r")
+plt.plot(x, y2, color = "#5e35b1")
+plt.plot(y3, color = "#b388ff")
+plt.title("Título")
+plt.xlabel("rótulo de x")
+plt.ylabel("rótulo de y")
+plt.legend(["série 1", "série 2"])
+plt.show()
+```
+
+*[fonte para as cores](https://www.materialpalette.com/colors)*
+
+#### plt.show() e ambientes
+
+Em scripts, plt.show() exibe e bloqueia até fechar a janela. Em notebooks, a execução costuma renderizar automaticamente. Teste ambos no seu ambiente.
+
+### Figuras e eixos
+
+```{python}
+import matplotlib.pyplot as plt
+fig = plt.figure(figsize=(7,4))
+ax = fig.add_subplot(1,1,1)
+ax.plot(x, y)
+ax.set(title="API orientada a objetos", xlabel="x", ylabel="sin(x)")
+fig.tight_layout()
+plt.show()
+```
+
+### Linha básica
+
+```{python}
+x = np.linspace(0, 2*np.pi, 256)
+plt.figure(figsize=(7,4))
+plt.plot(x, np.sin(x), color="steelblue", linestyle="-", linewidth=2, label="seno")
+plt.plot(x, np.cos(x), color="tomato", linestyle="--", linewidth=2, label="cosseno")
+plt.title("Seno e Cosseno")
+plt.xlabel("Ângulo (rad)")
+plt.ylabel("Valor")
+plt.legend()
+plt.grid(True, alpha=.3)
+plt.show()
+```
+
+### Rótulos, limites e ticks
+
+```{python}
+fig, ax = plt.subplots(figsize=(7,4))
+ax.plot(x, np.sin(x))
+ax.set_title("Customização de eixos")
+ax.set_xlabel("Ângulo (rad)")
+ax.set_ylabel("sin(x)")
+ax.set_xlim(0, 2*np.pi)
+ax.set_ylim(-1.1, 1.1)
+ax.grid(True, linestyle=":")
+plt.show()
+```
+
+## Subplots com plt.subplot
+
+```{python}
+plt.figure(figsize=(7,5))
+plt.subplot(2,1,1)
+plt.plot(x, np.sin(x)); plt.title("Seno")
+plt.subplot(2,1,2)
+plt.plot(x, np.cos(x)); plt.title("Cosseno")
+plt.tight_layout()
+plt.show()
+```
+
+### Subplots com plt.subplots
+
+```{python}
+fig, axes = plt.subplots(1,2, figsize=(9,3), sharex=True, sharey=True)
+axes[0].plot(x, np.sin(x)); axes[0].set_title("Seno")
+axes[1].plot(x, np.cos(x)); axes[1].set_title("Cosseno")
+fig.suptitle("Múltiplos painéis com OO", y=1.05)
+fig.tight_layout()
+plt.show()
+```
+
+## Disperção básica
+
+```{python}
+rng = np.random.default_rng(0)
+X = rng.normal(size=100)
+Y = 0.5*X + rng.normal(scale=0.6, size=100)
+plt.figure(figsize=(6.5,4))
+plt.scatter(X, Y)
+plt.title("Relação entre X e Y")
+plt.xlabel("X"); plt.ylabel("Y")
+plt.show()
+```
+
+### Dispersão com estilo
+
+```{python}
+sizes = 50 + 250*(np.abs(X)/X.max())
+colors = Y
+plt.figure(figsize=(6.5,4))
+sc = plt.scatter(X, Y, s = sizes, c = colors, alpha = .8, cmap = "viridis", edgecolor = "k")
+plt.colorbar(sc, label="Y")
+plt.title("Dispersão com tamanho e cor mapeados")
+plt.grid(True, alpha=.3)
+plt.show()
+```
+
+### Cores e colormaps
+
+Mapeie valores para cor com c=... e escolha mapas perceptualmente uniformes (p.ex., viridis, plasma). Evite codificar informação importante só pela cor sem legenda.
+
+## Histograma básico
+
+```{python}
+data = rng.normal(loc=0, scale=1, size=1000)
+plt.figure(figsize=(6.5,4))
+plt.hist(data, bins=30, color="#b388ff", edgecolor="black", alpha=.9)
+plt.title("Histograma (bins=30)")
+plt.xlabel("Valor"); plt.ylabel("Frequência")
+plt.show()
+```
+
+### Histograma como densidade
+
+```{python}
+plt.figure(figsize=(6.5,4))
+plt.hist(data, bins=30, density=True, histtype="stepfilled", alpha=.6, color="#b388ff")
+plt.title("Densidade aproximada via histograma")
+plt.xlabel("Valor"); plt.ylabel("Densidade")
+plt.show()
+```
+
+## Boxplot simples
+
+```{python}
+grupo_A = rng.normal(0, 1, 200)
+grupo_B = rng.normal(0.5, 1.3, 200)
+grupo_C = rng.normal(-0.2, 0.8, 200)
+plt.figure(figsize=(7,4))
+plt.boxplot([grupo_A, grupo_B, grupo_C], labels=["A","B","C"])
+plt.title("Boxplots por grupo")
+plt.ylabel("Valor")
+plt.grid(True, axis="y", alpha=.3)
+plt.show()
+```
+
+### Boxplot com opções
+
+```{python}
+plt.figure(figsize=(7,4))
+plt.boxplot([grupo_A, grupo_B, grupo_C], labels=["A","B","C"],
+showmeans=True, meanline=True, patch_artist=True,
+boxprops=dict(facecolor="lavender"))
+plt.title("Boxplots com média e preenchimento")
+plt.show()
+```
+
+## Gráfico de Barras
+
+```{python}
+cats = ["A","B","C","D"]
+vals = [25, 35, 20, 20]
+plt.figure(figsize=(7,4))
+plt.bar(cats, vals, color=["#4C78A8","#F58518","#E45756","#72B7B2"])
+plt.title("Distribuição por categoria")
+plt.ylabel("%")
+plt.grid(axis="y", alpha=.3)
+plt.show()
+```
+
+## Barras empilhadas
+
+```{python}
+import numpy as np
+base = np.array([30, 40, 20, 10])
+extra = np.array([20, 15, 10, 5])
+labs = ["Q1","Q2","Q3","Q4"]
+plt.figure(figsize=(7,4))
+plt.bar(labs, base, label="Base")
+plt.bar(labs, extra, bottom=base, label="Extra")
+plt.title("Barras empilhadas")
+plt.legend()
+plt.show()
+```
+
+## Gráfico de Setores circulares (pizza)
+
+```{python}
+plt.figure(figsize=(6,6))
+plt.pie(vals, labels=cats, autopct="%1.1f%%", startangle=90)
+plt.title("Participação relativa")
+plt.axis("equal")
+plt.show()
+```
+
+## Anotações e setas
+
+```{python}
+plt.figure(figsize=(7,4))
+plt.plot(x, np.sin(x))
+plt.annotate("Pico", xy=(np.pi/2, 1), xytext=(2.2, 1.2),
+arrowprops=dict(arrowstyle="->"))
+plt.title("Usando annotate para destacar pontos")
+plt.show()
+```
+
+## Salvando gráficos
+
+```{python}
+fig, ax = plt.subplots(figsize=(6,4))
+ax.plot(x, np.sin(x), label="seno")
+ax.legend()
+fig.tight_layout()
+fig.savefig("fig_seno.pdf")
+```
+
+## Estilos prontos
+
+```{python}
+plt.style.use('seaborn-v0_8')
+plt.figure(figsize=(7,4))
+plt.plot(x, np.sin(x), label="seno")
+plt.plot(x, np.cos(x), label="cosseno")
+plt.legend(); plt.title("Usando um estilo predefinido")
+plt.show()
+
+# Voltar ao clássico para os próximos exemplos
+#plt.style.use('classic')
+```
+
+## Pandas + Matplotlib
+
+```{python}
+plt.style.use('seaborn-v0_8')
+
+import pandas as pd
+
+rng = np.random.default_rng(42)
+df = pd.DataFrame({
+"dia": pd.date_range("2025-09-01", periods=14, freq="D"),
+"max": rng.normal(24, 3, 14).round(1),
+"min": rng.normal(16, 2, 14).round(1),
+})
+ax = df.plot(x="dia", y=["max","min"], figsize=(8,4), title="Temperaturas")
+ax.set_xlabel(""); ax.set_ylabel("°C"); ax.grid(True, alpha=.3)
+plt.show()
+```
+
+### Tema escuro rápido
+
+```{python}
+plt.style.use('dark_background')
+plt.figure(figsize=(7,4))
+plt.plot(x, np.sin(x), linewidth=3)
+plt.title("Estilo dark_background")
+plt.show()
+
+```
+
+```{python}
+plt.style.use('classic')
+```
+
+
+## Exportando para SVG/PDF
+
+Para publicações e vetores escaláveis, prefira PDF e SVG. Evite compressões excessivas em PNG quando precisão de linhas é importante.
+
+## Seaborn
+
+O matplotlib foi criado mais de uma década antes do pandas, de maneira que suas versões iniciais apresentavam dificuldades em se visualizar dados em dataframes, além de propiciar interfaces limitadas.
+Apesar da biblioteca ter se adaptado aos novos tempos, o Seaborn acabou surgindo como uma alternativa e oferece uma ampla gama de opções gráficas para Ciência de Dados.
+
+### Seaborn - Gráfico de Dispersão
+
+```{python}
+import seaborn as sns
+# Dadaset de gorjetas
+df = sns.load_dataset('tips')
+# Gráfico de dispersão com linha de regressão
+plt.figure()
+sns.lmplot(x='total_bill', y='tip', data=df)
+plt.title('Relação entre Conta Total e Gorjeta')
+plt.show()
+```
+
+### Seaborn - Boxplot
+
+```{python}
+# Boxplot por dia da semana
+plt.figure()
+sns.boxplot(x='day', y='total_bill', data=df, palette='Set2')
+plt.title('Distribuição da Conta por Dia da Semana')
+plt.show()
+```
+
+### Seaborn - contagem
+
+```{python}
+# Contagem de fumantes por sexo
+plt.figure()
+sns.countplot(x='sex', hue='smoker', data=df, palette='pastel')
+plt.title('Fumantes por Sexo')
+plt.show()
+```
+
+### Seaborn e Matplotlib
+
+Seaborn oferece atalhos estatísticos, colormaps padrão e temas consistentes. Matplotlib dá controle fino de cada elemento. Use Seaborn para explorar e Matplotlib para lapidar.
+
