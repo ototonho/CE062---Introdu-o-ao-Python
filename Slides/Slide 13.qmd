@@ -1,0 +1,314 @@
+---
+title: "Slide 13"
+format: html
+editor: visual
+---
+
+# Slide 13
+
+## Biblioteca Scipy
+
+### Por que SciPy para estatística?
+
+SciPy oferece um ecossistema sólido para estatística descritiva, inferência e modelagem. Integra-se naturalmente com NumPy e Matplotlib e permite, com poucas linhas, ir da teoria à prática reprodutível. Nesta aula conectamos conceitos estatísticos a APIs do SciPy com exemplos executáveis.
+
+### Ambiente e imports essenciais
+
+Organização dos pacotes: numpy (arrays e álgebra), scipy.stats (distribuições e testes), scipy.optimize (otimização/MLE) e matplotlib (gráficos).
+
+```{python}
+import numpy as np
+from scipy import stats, optimize, linalg, special
+import matplotlib.pyplot as plt
+rng = np.random.default_rng(123)
+np.set_printoptions(precision=3, suppress=True)
+```
+
+### Conjunto de dados simulado
+
+Criaremos uma amostra com cluster Normal principal e alguns outliers leves para discutir robustez e medidas de tendência/escala.
+
+```{python}
+n = 600
+x = rng.normal(loc=10, scale=2, size=n)
+x_out = rng.normal(loc=16, scale=1.2, size=20)
+x_all = np.concatenate([x, x_out])
+len(x_all)
+```
+
+```{python}
+fig = plt.figure()
+plt.hist(x_all, bins=30, density=True)
+plt.title("Histograma (dados contínuos)")
+plt.xlabel("Valor"); plt.ylabel("Densidade")
+plt.show()
+```
+
+
+## Estatística descritiva (tendência e dispersão)
+
+Com outliers, mediana e IQR ficam mais robustos do que média e desvio-padrão.
+
+```{python}
+mean = np.mean(x_all)
+median = np.median(x_all)
+var = np.var(x_all, ddof=1)
+std = np.std(x_all, ddof=1)
+q1, q3 = np.percentile(x_all, [25, 75])
+iqr = q3 - q1
+summary = {
+"média": float(mean), "mediana": float(median), "variância": float(var),
+"desvio-padrão": float(std), "Q1": float(q1), "Q3": float(q3), "IQR": float(iqr)
+}
+summary
+```
+
+## Distribuições com scipy.stats
+
+Ajuste Normal para visualizar forma teórica vs. dados.
+
+```{python}
+xs = np.linspace(4, 20, 300)
+pdf_norm = stats.norm.pdf(xs, loc=mean, scale=std)
+cdf_norm = stats.norm.cdf(xs, loc=mean, scale=std)
+fig = plt.figure()
+plt.plot(xs, pdf_norm, label="PDF Normal ajustada")
+plt.plot(xs, cdf_norm, label="CDF Normal ajustada")
+plt.legend(); plt.title("PDF & CDF — Normal ajustada aos dados")
+plt.xlabel("x"); plt.ylabel("densidade / prob.")
+plt.show()
+```
+
+## Amostragem e simulação
+
+Simule para entender variabilidade, p-values e ICs.
+
+```{python}
+sim = stats.norm.rvs(loc=mean, scale=std, size=2000, random_state=123)
+fig = plt.figure()
+plt.hist(sim, bins=30)
+plt.title("Amostras simuladas da Normal ajustada")
+plt.xlabel("valor"); plt.ylabel("frequência")
+plt.show()
+```
+
+## IC para a média com t-Student
+
+Quando σ é desconhecido, use t. IC bilateral de 95%.
+
+```{python}
+alpha = 0.05
+n_all = len(x_all)
+xbar = np.mean(x_all)
+se = stats.sem(x_all) # s / sqrt(n)
+tcrit = stats.t.ppf(1 - alpha/2, df=n_all - 1)
+ci = (xbar - tcrit*se, xbar + tcrit*se)
+{"xbar": float(xbar), "IC95%": (float(ci[0]), float(ci[1]))}
+```
+
+## Testes de normalidade (Shapiro, Anderson, KS)
+
+A validade de muitos testes depende de normalidade aproximada.
+
+```{python}
+shapiro = stats.shapiro(x_all) # estatística, p-valor
+anderson = stats.anderson(x_all, dist='norm') # estatística e críticos
+ks = stats.kstest((x_all - xbar)/np.std(x_all, ddof=1), 'norm')
+{"Shapiro-Wilk": {"W": float(shapiro.statistic), "p": float(shapiro.pvalue)},
+"Anderson-Darling (norm)": float(anderson.statistic),
+"KS normalizado": {"D": float(ks.statistic), "p": float(ks.pvalue)}}
+```
+
+## Testes t: 1 amostra, 2 amostras e pareado
+
+Comparações de médias sob suposições de normalidade.
+
+```{python}
+# 1 amostra: H0: mu = 10
+t1 = stats.ttest_1samp(x_all, popmean=10)
+# 2 amostras independentes (gerar grupo B)
+y = rng.normal(loc=11, scale=2.2, size=620)
+t2 = stats.ttest_ind(x_all, y, equal_var=False)
+# pareado (antes-depois sintético)
+before = rng.normal(100, 15, 120)
+after = before - rng.normal(3, 5, 120) # efeito médio ~3
+tp = stats.ttest_rel(before, after)
+{"t 1-amostra": {"stat": float(t1.statistic), "p": float(t1.pvalue)},
+"t Welch 2-amostras": {"stat": float(t2.statistic), "p": float(t2.pvalue)},
+"t pareado": {"stat": float(tp.statistic), "p": float(tp.pvalue)}}
+```
+
+## Correlação: Pearson e Spearman
+
+```{python}
+# Dados bivariados sintéticos
+n2 = 300
+X1 = rng.normal(0,1,n2)
+X2 = 0.6*X1 + rng.normal(0,1,n2)
+pear = stats.pearsonr(X1, X2) # coef, p
+spear = stats.spearmanr(X1, X2) # coef, p
+{"pearson": {"r": float(pear.statistic), "p": float(pear.pvalue)},
+"spearman": {"rho": float(spear.statistic), "p": float(spear.pvalue)}}
+```
+
+```{python}
+fig = plt.figure()
+plt.scatter(X1, X2, alpha=0.6)
+plt.title("Dispersão: correlação linear moderada")
+plt.xlabel("X1"); plt.ylabel("X2")
+plt.show()
+```
+
+## ANOVA (one-way) com f_oneway
+
+Comparar 3+ médias.
+
+```{python}
+g1 = rng.normal(5.0, 1.1, 80)
+g2 = rng.normal(5.5, 1.2, 85)
+g3 = rng.normal(6.0, 1.0, 90)
+anova = stats.f_oneway(g1, g2, g3)
+{"F": float(anova.statistic), "p": float(anova.pvalue)}
+```
+
+## Tabelas de contingência e qui-quadrado
+
+Associação entre duas categóricas.
+
+```{python}
+# Matriz 2x3 (ex.: sucesso/fracasso vs. grupo)
+table = np.array([[30, 25, 20],
+[20, 22, 28]])
+chi2, p, dof, expected = stats.chi2_contingency(table)
+{"chi2": float(chi2), "p": float(p), "df": int(dof), "esperados": expected.tolist()}
+```
+
+## Proporções: IC e teste z (aprox. normal)
+
+Para n grande, IC aproximado: p̂ ± z * sqrt(p̂(1−p̂)/n).
+
+```{python}
+# Ex.: 180 sucessos em 300
+succ, n_ = 180, 300
+phat = succ/n_
+z = stats.norm.ppf(0.975)
+se = np.sqrt(phat*(1-phat)/n_)
+ci_prop = (phat - z*se, phat + z*se)
+{"p̂": float(phat), "IC95% aprox.": (float(ci_prop[0]), float(ci_prop[1]))}
+```
+
+## Regressão linear simples
+
+OLS para Y ~ a + bX; diagnóstico e predição.
+
+```{python}
+n3 = 220
+X = rng.uniform(0, 10, n3)
+eps = rng.normal(0, 2, n3)
+Y = 1.5 + 0.8*X + eps
+fit = stats.linregress(X, Y)
+{"slope": float(fit.slope), "intercept": float(fit.intercept),
+"rvalue": float(fit.rvalue), "pvalue": float(fit.pvalue), "stderr": float(fit.stderr)}
+```
+
+```{python}
+xg = np.linspace(0, 10, 200)
+yg = fit.intercept + fit.slope * xg
+fig = plt.figure()
+plt.scatter(X, Y, alpha=0.6, label="dados")
+plt.plot(xg, yg, label="OLS")
+plt.legend(); plt.title("Regressão linear simples")
+plt.xlabel("X"); plt.ylabel("Y")
+plt.show()
+```
+
+## Métricas & resíduos na regressão
+
+R², resíduos e suposições (homocedasticidade, normalidade aproximada).
+
+```{python}
+yhat = fit.intercept + fit.slope * X
+res = Y - yhat
+R2 = 1 - np.sum(res**2)/np.sum((Y - np.mean(Y))**2)
+{"R2": float(R2), "resíduo_médio": float(np.mean(res)),
+"resíduo_dp": float(np.std(res, ddof=1))}
+```
+
+```{python}
+fig = plt.figure()
+plt.scatter(yhat, res, alpha=0.6)
+plt.axhline(0)
+plt.title("Resíduos vs. ajustados")
+plt.xlabel("ŷ"); plt.ylabel("resíduo")
+plt.show()
+```
+
+## AIC e BIC
+
+Critérios de informação para seleção de modelos.
+
+```{python}
+n = len(Y)
+k = 2 # intercepto e slope
+rss = np.sum(res**2)
+sigma2 = rss/n
+loglik = -0.5*n*(np.log(2*np.pi*sigma2) + 1)
+AIC = -2*loglik + 2*k
+BIC = -2*loglik + k*np.log(n)
+{"AIC": float(AIC), "BIC": float(BIC)}
+```
+
+## Ajuste de distribuição com .fit e KS
+
+Ajuste paramétrico rápido e checagem básica de aderência.
+
+```{python}
+mu_hat, sigma_hat = stats.norm.fit(x_all)
+ks_fit = stats.kstest(x_all, 'norm', args=(mu_hat, sigma_hat))
+{"mu_hat": float(mu_hat), "sigma_hat": float(sigma_hat),
+"KS": {"D": float(ks_fit.statistic), "p": float(ks_fit.pvalue)}}
+```
+
+## Testes não paramétricos
+
+Quando normalidade é fraca: Mann–Whitney (2 grupos) e Wilcoxon (pareado).
+
+```{python}
+mw = stats.mannwhitneyu(g1, g3, alternative='two-sided')
+wk = stats.wilcoxon(before - after) # diferença ~ efeito
+{"Mann-Whitney": {"U": float(mw.statistic), "p": float(mw.pvalue)},
+"Wilcoxon pareado": {"W": float(wk.statistic), "p": float(wk.pvalue)}}
+```
+
+## IC de predição vs. confiança (linear)
+
+Predição incorpora erro novo; confiança foca na média.
+
+```{python}
+# Cálculo simples (assumindo homocedasticidade): IC para média em x0 e IP
+x0 = 2.0
+yhat0 = fit.intercept + fit.slope*x0
+s2 = np.sum(res**2)/(n3 - 2)
+Sxx = np.sum((X - np.mean(X))**2)
+se_mean = np.sqrt(s2*(1/n3 + (x0 - np.mean(X))**2 / Sxx))
+tcrit = stats.t.ppf(0.975, df=n3 - 2)
+IC = (yhat0 - tcrit*se_mean, yhat0 + tcrit*se_mean)
+IP = (yhat0 - tcrit*np.sqrt(se_mean**2 + s2),
+yhat0 + tcrit*np.sqrt(se_mean**2 + s2))
+{"IC_média_95%": (float(IC[0]), float(IC[1])),
+"IP_95%": (float(IP[0]), float(IP[1]))}
+```
+
+## Bootstrap (IC empírico)
+
+Quando fórmulas fechadas são difíceis, reamostrar ajuda.
+
+```{python}
+B = 1000
+means = np.empty(B)
+for b in range(B):
+idx = rng.integers(0, len(x_all), len(x_all))
+means[b] = np.mean(x_all[idx])
+ci_boot = (np.percentile(means, 2.5), np.percentile(means, 97.5))
+{"IC95% bootstrap (média)": (float(ci_boot[0]), float(ci_boot[1]))}
+```
