@@ -101,9 +101,9 @@ alpha = 0.05
 n_all = len(x_all)
 xbar = np.mean(x_all)
 se = stats.sem(x_all) # s / sqrt(n)
-tcrit = stats.t.ppf(1 - alpha/2, df=n_all - 1)
+tcrit = stats.t.ppf(1 - alpha/2, df=n_all - 1) # 1 grau de liberdade ??
 ci = (xbar - tcrit*se, xbar + tcrit*se)
-{"xbar": float(xbar), "IC95%": (float(ci[0]), float(ci[1]))}
+{"xbar": float(round(xbar, 3)), "IC95%": (float(round(ci[0],3)), float(round(ci[1],3)))}
 ```
 
 ## Testes de normalidade (Shapiro, Anderson, KS)
@@ -113,10 +113,10 @@ A validade de muitos testes depende de normalidade aproximada.
 ```{python}
 shapiro = stats.shapiro(x_all) # estatística, p-valor
 anderson = stats.anderson(x_all, dist='norm') # estatística e críticos
-ks = stats.kstest((x_all - xbar)/np.std(x_all, ddof=1), 'norm')
-{"Shapiro-Wilk": {"W": float(shapiro.statistic), "p": float(shapiro.pvalue)},
-"Anderson-Darling (norm)": float(anderson.statistic),
-"KS normalizado": {"D": float(ks.statistic), "p": float(ks.pvalue)}}
+ks = stats.kstest((x_all - xbar)/np.std(x_all, ddof=1), 'norm')   # é possível rodar/abrir cada um dos testes para ver se aceita ou não
+{"Shapiro-Wilk": {"W": float(round(shapiro.statistic,3)), "p": float(round(shapiro.pvalue,3))},
+"Anderson-Darling (norm)": float(round(anderson.statistic,3)),
+"KS normalizado": {"D": float(round(ks.statistic,3)), "p": float(round(ks.pvalue,3))}}
 ```
 
 ## Testes t: 1 amostra, 2 amostras e pareado
@@ -133,9 +133,9 @@ t2 = stats.ttest_ind(x_all, y, equal_var=False)
 before = rng.normal(100, 15, 120)
 after = before - rng.normal(3, 5, 120) # efeito médio ~3
 tp = stats.ttest_rel(before, after)
-{"t 1-amostra": {"stat": float(t1.statistic), "p": float(t1.pvalue)},
-"t Welch 2-amostras": {"stat": float(t2.statistic), "p": float(t2.pvalue)},
-"t pareado": {"stat": float(tp.statistic), "p": float(tp.pvalue)}}
+{"t 1-amostra": {"stat": float(round(t1.statistic,3)), "p": float(round(t1.pvalue,3))},
+"t Welch 2-amostras": {"stat": float(round(t2.statistic,3)), "p": float(round(t2.pvalue,3))},
+"t pareado": {"stat": float(round(tp.statistic,3)), "p": float(round(tp.pvalue,3))}}
 ```
 
 ## Correlação: Pearson e Spearman
